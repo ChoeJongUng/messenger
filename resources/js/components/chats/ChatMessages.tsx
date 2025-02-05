@@ -64,7 +64,7 @@ export default function ChatMessages() {
                             <img
                               src={message.from.avatar}
                               alt={message.from.name}
-                              className="h-6 w-6 rounded-full border border-secondary"
+                              className="h-6 w-6 rounded-md border border-secondary"
                             />
                             <p className="text-sm font-medium">
                               {message.from.name}

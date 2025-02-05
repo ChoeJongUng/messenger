@@ -32,7 +32,7 @@ export default function Edit({
         <>
           <div className="min-h-[100vh] py-4 sm:py-6">
             <div className="mx-auto max-w-7xl space-y-4 px-4 sm:space-y-6 sm:px-6">
-              <div className="rounded-lg bg-background p-4 shadow sm:p-8">
+              <div className=" bg-background p-4  sm:p-8">
                 <ViewProfileInformationForm
                   mustVerifyEmail={mustVerifyEmail}
                   status={status}
@@ -42,7 +42,7 @@ export default function Edit({
               </div>
             </div>
           </div>
-          <div className="sticky bottom-[0]">
+          <div className="fixed bottom-[0]">
             <SidebarMini />
           </div>
         </>

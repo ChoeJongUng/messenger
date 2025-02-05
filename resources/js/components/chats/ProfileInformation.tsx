@@ -62,7 +62,7 @@ export default function ProfileInformation({
     >
       <div className="visible flex h-14 items-center border-b border-secondary bg-background px-2 lg:invisible">
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary"
+          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
           onClick={toggleSidebarRight}
         >
           <BsXLg />
@@ -73,7 +73,7 @@ export default function ProfileInformation({
         <img
           src={user.avatar}
           alt={user.name}
-          className="mx-auto h-20 w-20 rounded-full border border-secondary"
+          className="mx-auto h-20 w-20 rounded-md border border-secondary"
         />
 
         <h5 className="font-medium">{user.name}</h5>
@@ -87,7 +87,7 @@ export default function ProfileInformation({
               {user.description}
             </div>
             <button
-              className="btn btn-secondary btn-close rounded-full text-base focus:ring-0"
+              className="btn btn-secondary btn-close rounded-md text-base focus:ring-0"
               onClick={editGroup}
             >
               <FaInfoCircle
@@ -101,7 +101,7 @@ export default function ProfileInformation({
 
       <div className="px-2">
         <button
-          className="flex w-full items-center justify-between rounded-lg px-3 py-2 hover:bg-secondary focus:bg-secondary"
+          className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-secondary focus:bg-secondary"
           onClick={() => setToggleCustomizeChat(!toggleCustomizeChat)}
         >
           <span>채팅 사용자 정의</span>
@@ -109,7 +109,7 @@ export default function ProfileInformation({
         </button>
         {toggleCustomizeChat && (
           <button
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm hover:bg-secondary focus:bg-secondary"
+            className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-secondary focus:bg-secondary"
             onClick={customizeChat}
           >
             <BsRecordCircle
@@ -121,7 +121,7 @@ export default function ProfileInformation({
         )}
 
         <button
-          className="flex w-full items-center justify-between rounded-lg px-3 py-2 hover:bg-secondary focus:bg-secondary"
+          className="flex w-full items-center justify-between rounded-md px-3 py-2 hover:bg-secondary focus:bg-secondary"
           onClick={() => setToggleShowMedia(!toggleShowMedia)}
         >
           <span>미디어, 파일 및 링크</span>

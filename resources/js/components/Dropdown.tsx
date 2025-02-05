@@ -44,7 +44,7 @@ const Trigger = ({ children }: PropsWithChildren) => {
     <>
       <div onClick={toggleOpen}>
         {children}
-        {route().current("profile.personal") == true && (
+        {route().current("profile.*") == true && (
           <div className="absolute right-[5px] top-[25%] ml-2">
             {open ? (
               <ChevronUpIcon className="h-5 w-5 text-gray-600" />
@@ -113,7 +113,7 @@ const Content = ({
         >
           <div
             className={
-              `rounded-lg bg-background !p-2 shadow-md ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-5 ` +
+              `max-h-[200px] overflow-scroll rounded-md bg-background !p-2 shadow-md ring-1 ring-black ring-opacity-5 dark:ring-white dark:ring-opacity-5` +
               contentClasses
             }
           >
@@ -148,9 +148,19 @@ const DropdownButton = ({
   children,
   ...props
 }: PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>) => {
+  const { setOpen } = useDropdownContext(); // Get the setOpen function from the context
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setOpen(false); // Close the dropdown when the button is clicked
+    if (props.onClick) {
+      props.onClick(event); // Call the original onClick handler with the event
+    }
+  };
+
   return (
     <button
       {...props}
+      onClick={handleClick} // Handle the button click
       className={
         "block w-full rounded-md px-4 py-2 text-start text-sm leading-5 text-foreground transition duration-150 ease-in-out hover:bg-secondary focus:bg-secondary focus:outline-none " +
         className

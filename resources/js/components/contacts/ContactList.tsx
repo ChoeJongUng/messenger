@@ -38,7 +38,7 @@ export default function ContactList() {
               href={route("chats.show", contact.id)}
               as="button"
               className={clsx(
-                "relative flex w-full flex-1 items-center gap-3 rounded-lg p-3 text-left transition-all group-hover:bg-secondary",
+                "relative flex w-full flex-1 items-center gap-3 rounded-md p-3 text-left transition-all group-hover:bg-secondary",
                 contact.is_contact_blocked && "opacity-25",
               )}
             >
@@ -46,7 +46,7 @@ export default function ContactList() {
                 <img
                   src={contact.avatar}
                   alt={contact.name}
-                  className="h-10 w-10 rounded-full border border-secondary"
+                  className="h-10 w-10 rounded-md border border-secondary"
                 />
                 {contact.is_online && <BadgeOnline />}
               </div>

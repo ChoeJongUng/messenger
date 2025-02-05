@@ -39,7 +39,7 @@ export default function DeleteSelectedFileInChat({
 
   return (
     <button
-      className="absolute right-1 top-1 z-10 hidden h-4 w-4 items-center justify-center rounded-full bg-danger text-white group-hover/attachment:flex"
+      className="absolute right-1 top-1 z-10 hidden h-4 w-4 items-center justify-center rounded-md bg-danger text-white group-hover/attachment:flex"
       onClick={deleteSelectedFile}
     >
       <BsX />

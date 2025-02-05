@@ -97,14 +97,14 @@ export default function EditGroup() {
                 <img
                   src={user?.avatar}
                   alt={user?.name}
-                  className="mx-auto h-20 w-20 rounded-full border border-secondary"
+                  className="mx-auto h-20 w-20 rounded-md border border-secondary"
                   ref={avatarRef}
                 />
 
                 {isCreator && (
                   <label
                     htmlFor="avatar"
-                    className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-full px-2"
+                    className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-md px-2"
                     tabIndex={0}
                   >
                     <BsCamera />

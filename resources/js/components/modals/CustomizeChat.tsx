@@ -59,7 +59,7 @@ export default function CustomizeChat() {
             onClick={() => changeMessageColor(color)}
           >
             <span
-              className="inline-block h-16 w-16 shrink-0 rounded-full"
+              className="inline-block h-16 w-16 shrink-0 rounded-md"
               style={{ background: color }}
             />
           </button>

@@ -23,7 +23,7 @@ export default function DragFileOverlay({
       <div className="absolute bottom-0 top-0 z-20 flex w-full items-center justify-center bg-secondary/60 text-2xl text-foreground/25 sm:text-3xl">
         <p
           className={clsx(
-            "-mt-[52px] rounded-lg px-4 py-2",
+            "-mt-[52px] rounded-md px-4 py-2",
             onDrop ? "bg-secondary/25" : "bg-secondary",
           )}
         >

@@ -171,7 +171,7 @@ export default function ChatFooter({
           차단된 연락처에 메시지를 보낼 수 없습니다.
         </p>
         <button
-          className="btn btn-success flex items-center gap-2 rounded-full"
+          className="btn btn-success flex items-center gap-2 rounded-md"
           onClick={handleUnblockContact}
         >
           <BsBan /> 차단해제
@@ -187,7 +187,7 @@ export default function ChatFooter({
     >
       <label
         htmlFor="file"
-        className="mb-1 cursor-pointer rounded-full p-2 text-primary transition-all hover:bg-secondary focus:bg-secondary"
+        className="mb-1 cursor-pointer rounded-md p-2 text-primary transition-all hover:bg-secondary focus:bg-secondary"
       >
         <BsPlusLg className="h-6 w-6" />
         <input
@@ -237,7 +237,7 @@ export default function ChatFooter({
 
       <button
         className={clsx(
-          "mb-1 flex rounded-full p-2 text-primary transition-all disabled:cursor-not-allowed",
+          "mb-1 flex rounded-md p-2 text-primary transition-all disabled:cursor-not-allowed",
           message.trim().length === 0 &&
             "hover:bg-secondary focus:bg-secondary",
           message.trim().length > 0 && !processing && "bg-primary !text-white",

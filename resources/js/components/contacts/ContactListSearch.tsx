@@ -40,7 +40,7 @@ export default function ContactListSearch({
       <input
         type="text"
         placeholder="대화상대 검색"
-        className="w-full rounded-lg border-secondary bg-background pl-10 focus:border-secondary focus:ring-transparent"
+        className="w-full rounded-md border-secondary bg-background pl-10 focus:border-secondary focus:ring-transparent"
         value={search}
         onChange={handleOnChange}
       />

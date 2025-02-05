@@ -57,7 +57,7 @@ export default function Modal({
           leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         >
           <Dialog.Panel
-            className={`mb-6 w-full transform rounded-lg bg-background shadow-xl transition-all sm:mx-auto ${maxWidthClass}`}
+            className={`mb-6 w-full transform rounded-md bg-background shadow-xl transition-all sm:mx-auto ${maxWidthClass}`}
           >
             {children}
           </Dialog.Panel>

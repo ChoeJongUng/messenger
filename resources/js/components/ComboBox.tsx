@@ -78,12 +78,12 @@ export default function ComboBox({
             {selectedPerson.map((person) => (
               <li
                 key={person.id}
-                className="flex items-center justify-between gap-2 rounded-full bg-primary px-2 py-1 text-white"
+                className="flex items-center justify-between gap-2 rounded-md bg-primary px-2 py-1 text-white"
               >
                 <span>{person.name}</span>
                 {!disabled && (
                   <button
-                    className="flex h-3 w-3 items-center rounded-full bg-white text-sm text-black"
+                    className="flex h-3 w-3 items-center rounded-md bg-white text-sm text-black"
                     type="button"
                     onClick={() => removeSelectedPerson(person)}
                     tabIndex={-1}

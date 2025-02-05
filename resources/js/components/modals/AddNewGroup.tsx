@@ -73,13 +73,13 @@ export default function AddNewGroup() {
             <img
               src="/images/group-avatar.png"
               alt="group-avatar.png"
-              className="mx-auto h-20 w-20 rounded-full border border-secondary"
+              className="mx-auto h-20 w-20 rounded-md border border-secondary"
               ref={avatarRef}
             />
 
             <label
               htmlFor="avatar"
-              className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-full px-2"
+              className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-md px-2"
               tabIndex={0}
             >
               <BsCamera />

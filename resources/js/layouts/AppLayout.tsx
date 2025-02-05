@@ -14,9 +14,10 @@ export default function AppLayout({
       <Head
         title={clsx(notification_count > 0 && `(${notification_count})`, title)}
       />
-
-      <div className="flex h-screen flex-col overflow-hidden bg-background text-foreground sm:flex-row">
-        {children}
+      <div className="relative">
+        <div className="flex h-screen flex-col overflow-visible bg-background text-foreground sm:flex-row">
+          {children}
+        </div>
       </div>
     </AppProvider>
   );

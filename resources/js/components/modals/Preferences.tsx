@@ -65,7 +65,7 @@ export default function Preferences() {
             checked={auth.active_status}
             onChange={toggleActiveStatus}
             className={clsx(
-              "relative inline-flex h-6 w-11 items-center rounded-full",
+              "relative inline-flex h-6 w-11 items-center rounded-md",
               auth.active_status ? "bg-primary" : "bg-secondary",
             )}
           >
@@ -73,7 +73,7 @@ export default function Preferences() {
             <span
               className={`${
                 auth.active_status ? "translate-x-6" : "translate-x-1"
-              } inline-block h-4 w-4 transform rounded-full bg-white transition`}
+              } inline-block h-4 w-4 transform rounded-md bg-white transition`}
             />
           </Switch>
         </div>

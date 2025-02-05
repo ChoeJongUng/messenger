@@ -28,7 +28,7 @@ export default function ChatHeader({
               ? route("chats.index")
               : route("business.index")
           }
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary sm:hidden"
+          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary sm:hidden"
         >
           <FaArrowLeft />
         </Link>
@@ -37,7 +37,7 @@ export default function ChatHeader({
           <img
             src={user.avatar}
             alt={user.name}
-            className="h-10 w-10 rounded-full border border-secondary"
+            className="h-10 w-10 rounded-md border border-secondary"
           />
           {user.is_online && <BadgeOnline className="!right-0" />}
         </div>
@@ -58,20 +58,20 @@ export default function ChatHeader({
 
       {onDrop ? (
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary"
+          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
           onClick={closeOnPreview}
         >
           <BsXLg />
         </button>
       ) : (
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary"
+          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
           onClick={toggleSidebarRight}
         >
           {showSidebarRight ? (
             <div
               className={clsx(
-                "rounded-full p-0.5 text-sm text-white",
+                "rounded-md p-0.5 text-sm text-white",
                 !user.message_color && "bg-primary",
               )}
               style={{ background: user.message_color }}

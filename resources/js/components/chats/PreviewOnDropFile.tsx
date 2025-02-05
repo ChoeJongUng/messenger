@@ -52,7 +52,7 @@ export default function PreviewOnDropFile({
             />
           ) : (
             <div className="flex flex-col items-center gap-2">
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-lg bg-secondary">
+              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-md bg-secondary">
                 <BsFileEarmarkText className="text-3xl" />
               </div>
               <div className="text-center">
@@ -70,7 +70,7 @@ export default function PreviewOnDropFile({
             <div key={`${file.name}-${index}`} className="group relative">
               <button
                 className={clsx(
-                  "flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-lg border-2 bg-secondary transition-all hover:border-primary focus:border-primary",
+                  "flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-md border-2 bg-secondary transition-all hover:border-primary focus:border-primary",
                   selectedPreview.preview === file.preview
                     ? "border-primary"
                     : "border-transparent",
@@ -91,7 +91,7 @@ export default function PreviewOnDropFile({
               </button>
 
               <button
-                className="absolute right-1 top-1 z-10 hidden h-4 w-4 items-center justify-center rounded-full bg-danger text-white group-hover:flex"
+                className="absolute right-1 top-1 z-10 hidden h-4 w-4 items-center justify-center rounded-md bg-danger text-white group-hover:flex"
                 onClick={() => removeAttachment(file)}
               >
                 <BsX />

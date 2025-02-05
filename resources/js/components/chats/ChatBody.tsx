@@ -73,7 +73,7 @@ export default function ChatBody({
             <img
               src={user.avatar}
               alt={user.name}
-              className="h-12 w-12 rounded-full border border-secondary"
+              className="h-12 w-12 rounded-md border border-secondary"
             />
           </div>
           <div>
@@ -124,9 +124,9 @@ export default function ChatBody({
           isTyping && (
             <div className="my-[3px] flex flex-row justify-start">
               <div className="typing relative flex gap-1 rounded-3xl bg-secondary px-4 py-3">
-                <div className="animate-typing h-2 w-2 rounded-full bg-secondary-foreground/50" />
-                <div className="animate-typing h-2 w-2 rounded-full bg-secondary-foreground/50" />
-                <div className="animate-typing h-2 w-2 rounded-full bg-secondary-foreground/50" />
+                <div className="animate-typing h-2 w-2 rounded-md bg-secondary-foreground/50" />
+                <div className="animate-typing h-2 w-2 rounded-md bg-secondary-foreground/50" />
+                <div className="animate-typing h-2 w-2 rounded-md bg-secondary-foreground/50" />
               </div>
             </div>
           )}

@@ -19,15 +19,59 @@ export default function UpdateProfileInformation({
 }: {
   mustVerifyEmail: boolean;
   status?: string;
-  friends:any;
+  friends: any;
   className?: string;
 }) {
+  const countries = [
+    "러시아",
+    "일본",
+    "중국대륙",
+    "중국홍콩",
+    "한국",
+    "몽골",
+    "싱가포르",
+    "말레이시아",
+    "북한",
+  ];
   const user = usePage<PageProps>().props.auth;
-  const { currentPremium,remainedDays } = usePremium();
+  const { currentPremium, remainedDays } = usePremium();
   const avatarRef = useRef<HTMLImageElement>(null);
-  const jobs=["사장","기사"];
-  const categories = ["운송","무역"];
-  const capabilities = ["100","200"];
+  const jobs = ["사장", "대리", "통역", "개인"];
+  const categories = [
+    "가정 및 사무용 가구",
+    "가정장식품",
+    "가정용품",
+    "건축자재",
+    "기계설비",
+    "귀중품",
+    "농기계 및 농업 관련",
+    "농산",
+    "동물약용재료",
+    "석탄",
+    "석유와 휘발유",
+    "섬유 및 원료",
+    "수산",
+    "식료품",
+    "식물약용재료",
+    "신발",
+    "오토바이 및 부분품",
+    "의류 및 악세서리",
+    "의약품 및 의료장비",
+    "임가공",
+    "자동차 및 부분품",
+    "장난감 및 선물",
+    "전자제품",
+    "전통공예품",
+    "전통적인 향료",
+    "철광석 및 금속제품",
+    "출산 및 육아",
+    "체육 및 야외활동",
+    "화장품 및 뷰티",
+    "화학비료 및 농업용 화학제품",
+    "화학제품",
+    "IT 및 사무용품",
+  ];
+  const capabilities = ["작은 규모", "중간 규모", "큰 규모"];
   const { data, setData, post, errors, processing, recentlySuccessful } =
     useForm<UpdateProfileSchema>({
       _method: "PATCH",
@@ -68,33 +112,33 @@ export default function UpdateProfileInformation({
     <section className={className}>
       <header>
         <h2 className="text-lg font-medium text-foreground">개인정보</h2>
-
       </header>
 
       <form onSubmit={submit} className="mt-6 space-y-6">
-        <div className="picture relative">
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className="mx-auto h-20 w-20 rounded-full border border-secondary"
-            ref={avatarRef}
-          />
-
-          <label
-            htmlFor="avatar"
-            className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-full px-2"
-            tabIndex={0}
-          >
-            <BsCamera />
-            <input
-              type="file"
-              onChange={changeAvatar}
-              id="avatar"
-              className="hidden"
+        <div className="rounded-md p-4 shadow">
+          <div className="picture relative">
+            <img
+              src={user.avatar}
+              alt={user.name}
+              className="mx-auto h-20 w-20 rounded-md border border-secondary"
+              ref={avatarRef}
             />
-          </label>
-        </div>
-        {/* <div>
+
+            <label
+              htmlFor="avatar"
+              className="btn btn-primary absolute left-1/2 top-6 flex translate-x-5 cursor-pointer items-center justify-center rounded-md px-2"
+              tabIndex={0}
+            >
+              <BsCamera />
+              <input
+                type="file"
+                onChange={changeAvatar}
+                id="avatar"
+                className="hidden"
+              />
+            </label>
+          </div>
+          {/* <div>
           <InputLabel htmlFor="balance" value="포인트잔액" />
 
           <TextInput
@@ -106,54 +150,69 @@ export default function UpdateProfileInformation({
 
           <InputError className="mt-2" message={errors.name} />
         </div> */}
-        <div>
-          <InputLabel htmlFor="name" value="이름" />
+          <div>
+            <InputLabel htmlFor="name" value="이름" />
 
-          <TextInput
-            id="name"
-            className="mt-1 block w-full"
-            value={data.name}
-            onChange={(e) => setData("name", e.target.value)}
-            required
-            isFocused
-            autoComplete="name"
-          />
+            <TextInput
+              id="name"
+              className="mt-1 block w-full"
+              value={data.name}
+              onChange={(e) => setData("name", e.target.value)}
+              required
+              autoComplete="name"
+              readOnly
+            />
 
-          <InputError className="mt-2" message={errors.name} />
+            <InputError className="mt-2" message={errors.name} />
+          </div>
+
+          <div>
+            <InputLabel htmlFor="phone" value="전화번호" />
+
+            <TextInput
+              id="phone"
+              type="text"
+              className="mt-1 block w-full"
+              value={data.phone}
+              onChange={(e) => setData("phone", e.target.value)}
+              required
+              readOnly
+              autoComplete="phone"
+            />
+
+            <InputError className="mt-2" message={errors.phone} />
+          </div>
         </div>
 
-        <div>
-          <InputLabel htmlFor="phone" value="전화번호" />
-
-          <TextInput
-            id="phone"
-            type="text"
-            className="mt-1 block w-full"
-            value={data.phone}
-            onChange={(e) => setData("phone", e.target.value)}
-            required
-            autoComplete="phone"
-          />
-
-          <InputError className="mt-2" message={errors.phone} />
-        </div>
         <div>
           <InputLabel htmlFor="gender" value="성별" />
-      
+
           <Dropdown>
             <Dropdown.Trigger>
-              <button className="btn btn-secondary flex items-center gap-2 w-full " onClick={(e)=>e.preventDefault()}>
-                {data.gender||"성별"}
+              <button
+                className="btn btn-secondary flex w-full items-center gap-2 "
+                onClick={(e) => e.preventDefault()}
+              >
+                {data.gender || "성별"}
               </button>
             </Dropdown.Trigger>
             <Dropdown.Content>
-              
-                <Dropdown.Button onClick={(e) => {e.preventDefault();setData("gender", "남성")}}>
-                  남성
-                </Dropdown.Button>
-                <Dropdown.Button onClick={(e) => {e.preventDefault();setData("gender", "여성")}}>
-                  여성
-                </Dropdown.Button>
+              <Dropdown.Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setData("gender", "남성");
+                }}
+              >
+                남성
+              </Dropdown.Button>
+              <Dropdown.Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setData("gender", "여성");
+                }}
+              >
+                여성
+              </Dropdown.Button>
             </Dropdown.Content>
           </Dropdown>
           <InputError className="mt-2" message={errors.gender} />
@@ -167,21 +226,35 @@ export default function UpdateProfileInformation({
             value={data.age}
             onChange={(e) => setData("age", parseInt(e.target.value))}
             autoComplete="age"
-
           />
           <InputError className="mt-2" message={errors.age} />
         </div>
         <div>
           <InputLabel htmlFor="country" value="국가" />
-          <TextInput
-            id="country"
-            type="text"
-            className="mt-1 block w-full"
-            value={data.country}
-            onChange={(e) => setData("country", e.target.value)}
-            autoComplete="country"
 
-          />
+          <Dropdown>
+            <Dropdown.Trigger>
+              <button
+                className="btn btn-secondary flex w-full items-center gap-2 "
+                onClick={(e) => e.preventDefault()}
+              >
+                {data.country || "국가선택"}
+              </button>
+            </Dropdown.Trigger>
+            <Dropdown.Content>
+              {countries.map((country) => (
+                <Dropdown.Button
+                  key={country}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setData("country", country);
+                  }}
+                >
+                  {country}
+                </Dropdown.Button>
+              ))}
+            </Dropdown.Content>
+          </Dropdown>
           <InputError className="mt-2" message={errors.country} />
         </div>
         <div>
@@ -193,7 +266,6 @@ export default function UpdateProfileInformation({
             value={data.city}
             onChange={(e) => setData("city", e.target.value)}
             autoComplete="city"
-
           />
           <InputError className="mt-2" message={errors.city} />
         </div>
@@ -206,7 +278,6 @@ export default function UpdateProfileInformation({
             value={data.company}
             onChange={(e) => setData("company", e.target.value)}
             autoComplete="company"
-
           />
           <InputError className="mt-2" message={errors.company} />
         </div>
@@ -214,16 +285,25 @@ export default function UpdateProfileInformation({
           <InputLabel htmlFor="job" value="회사직책" />
           <Dropdown>
             <Dropdown.Trigger>
-              <button className="btn btn-secondary flex items-center gap-2 w-full " onClick={(e)=>e.preventDefault()}>
-                {data.job||"회사직책"}
+              <button
+                className="btn btn-secondary flex w-full items-center gap-2 "
+                onClick={(e) => e.preventDefault()}
+              >
+                {data.job || "회사직책"}
               </button>
             </Dropdown.Trigger>
             <Dropdown.Content>
-                {jobs.map((job)=>(
-                  <Dropdown.Button key={job} onClick={(e) => {e.preventDefault();setData("job",job)}}>
-                    {job}
-                  </Dropdown.Button>
-                ))}
+              {jobs.map((job) => (
+                <Dropdown.Button
+                  key={job}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setData("job", job);
+                  }}
+                >
+                  {job}
+                </Dropdown.Button>
+              ))}
             </Dropdown.Content>
           </Dropdown>
           <InputError className="mt-2" message={errors.job} />
@@ -232,16 +312,25 @@ export default function UpdateProfileInformation({
           <InputLabel htmlFor="category" value="무역종류" />
           <Dropdown>
             <Dropdown.Trigger>
-              <button className="btn btn-secondary flex items-center gap-2 w-full " onClick={(e)=>e.preventDefault()}>
-                {data.category||"무역종류"}
+              <button
+                className="btn btn-secondary flex w-full items-center gap-2 "
+                onClick={(e) => e.preventDefault()}
+              >
+                {data.category || "무역종류"}
               </button>
             </Dropdown.Trigger>
             <Dropdown.Content>
-                {categories.map((category)=>(
-                  <Dropdown.Button key={category} onClick={(e) => {e.preventDefault();setData("category",category)}}>
-                    {category}
-                  </Dropdown.Button>
-                ))}
+              {categories.map((category) => (
+                <Dropdown.Button
+                  key={category}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setData("category", category);
+                  }}
+                >
+                  {category}
+                </Dropdown.Button>
+              ))}
             </Dropdown.Content>
           </Dropdown>
           <InputError className="mt-2" message={errors.category} />
@@ -250,16 +339,25 @@ export default function UpdateProfileInformation({
           <InputLabel htmlFor="capability" value="무역범위" />
           <Dropdown>
             <Dropdown.Trigger>
-              <button className="btn btn-secondary flex items-center gap-2 w-full " onClick={(e)=>e.preventDefault()}>
-                {data.capability||"무역범위"}
+              <button
+                className="btn btn-secondary flex w-full items-center gap-2 "
+                onClick={(e) => e.preventDefault()}
+              >
+                {data.capability || "무역범위"}
               </button>
             </Dropdown.Trigger>
             <Dropdown.Content>
-                {capabilities.map((capability)=>(
-                  <Dropdown.Button key={capability} onClick={(e) => {e.preventDefault();setData("capability",capability)}}>
-                    {capability}
-                  </Dropdown.Button>
-                ))}
+              {capabilities.map((capability) => (
+                <Dropdown.Button
+                  key={capability}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setData("capability", capability);
+                  }}
+                >
+                  {capability}
+                </Dropdown.Button>
+              ))}
             </Dropdown.Content>
           </Dropdown>
           <InputError className="mt-2" message={errors.capability} />
@@ -286,8 +384,10 @@ export default function UpdateProfileInformation({
           </div>
         )} */}
 
-        <div className="flex items-center gap-4">
-          <PrimaryButton disabled={processing} className="w-full bg-[forestgreen]">저장</PrimaryButton>
+        <div className="!mb-[100px] flex items-center gap-4">
+          <PrimaryButton disabled={processing} className="w-full bg-[#07c160]">
+            저장
+          </PrimaryButton>
 
           <Transition
             show={recentlySuccessful}

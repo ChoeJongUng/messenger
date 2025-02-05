@@ -15,44 +15,39 @@ export default function Premium({
   auth,
   mustVerifyEmail,
   status,
-  friends
-}: PageProps<{ mustVerifyEmail: boolean; status?: string ;friends:[];}>) {
+  friends,
+}: PageProps<{ mustVerifyEmail: boolean; status?: string; friends: [] }>) {
   const { width } = useScreenSize();
   return (
     <AppProvider>
-    <Head
-      title="정식회원등록"
-    />
-    {width<640?(
-      <>
-        <div className="py-4 sm:py-6 min-h-[100vh]">
-          <div className="mx-auto max-w-7xl space-y-4 px-4 sm:space-y-6 sm:px-6">
-            <div className="rounded-lg bg-background p-4 shadow sm:p-8">
-            <div className="rounded-lg bg-background p-4 shadow sm:p-8">
-            <PremiumForm className="max-w-xl" friends={friends}/>
-          </div>
+      <Head title="정식회원등록" />
+      {width < 640 ? (
+        <>
+          <div className="min-h-[100vh] py-4 sm:py-6">
+            <div className="mx-auto max-w-7xl space-y-4 px-4 sm:space-y-6 sm:px-6">
+              <div className="rounded-md bg-background p-4 shadow sm:p-8">
+                <div className="rounded-md bg-background p-4 shadow sm:p-8">
+                  <PremiumForm className="max-w-xl" friends={friends} />
+                </div>
+              </div>
             </div>
-
           </div>
-        </div>
-        <div className="sticky bottom-[0]">
-          <SidebarMini />
-        </div>
-      </>
-    ):(
-      <>
-        <div className="flex h-screen flex-col bg-background text-foreground sm:flex-row">
-          <SidebarMini />
-          <div className="order-3 h-screen w-full flex-1 flex-col items-center justify-center gap-4 border-l border-secondary sm:flex">
-          <div className="rounded-lg bg-background p-4 shadow sm:p-8">
-            <PremiumForm className="max-w-xl" friends={friends}/>
+          <div className="fixed bottom-[0]">
+            <SidebarMini />
           </div>
+        </>
+      ) : (
+        <>
+          <div className="flex h-screen flex-col bg-background text-foreground sm:flex-row">
+            <SidebarMini />
+            <div className="order-3 h-screen w-full flex-1 flex-col items-center justify-center gap-4 border-l border-secondary sm:flex">
+              <div className="rounded-md bg-background p-4 shadow sm:p-8">
+                <PremiumForm className="max-w-xl" friends={friends} />
+              </div>
+            </div>
           </div>
-        </div>
-      </>
-    )}
-
-  </AppProvider>
+        </>
+      )}
+    </AppProvider>
   );
-
 }

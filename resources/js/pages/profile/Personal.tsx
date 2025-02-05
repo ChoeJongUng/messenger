@@ -15,50 +15,46 @@ export default function Personal({
   auth,
   mustVerifyEmail,
   status,
-  friends
-}: PageProps<{ mustVerifyEmail: boolean; status?: string ;friends:[];}>) {
+  friends,
+}: PageProps<{ mustVerifyEmail: boolean; status?: string; friends: [] }>) {
   const { width } = useScreenSize();
 
   return (
     <AppProvider>
-    <Head
-      title="개인정보"
-    />
-    {width<640?(
-      <>
-        <div className="py-4 sm:py-6 min-h-[100vh]">
-          <div className="mx-auto max-w-7xl space-y-4 px-4 sm:space-y-6 sm:px-6">
-            <div className="rounded-lg bg-background p-4 shadow sm:p-8">
-            <UpdateProfileInformationForm
-              mustVerifyEmail={mustVerifyEmail}
-              status={status}
-              friends={friends}
-              className="max-w-xl"
-            />
+      <Head title="개인정보" />
+      {width < 640 ? (
+        <>
+          <div className="min-h-[100vh] py-4 sm:py-6">
+            <div className="mx-auto max-w-7xl space-y-4 px-4 sm:space-y-6 sm:px-6">
+              <div className="bg-background  ">
+                <UpdateProfileInformationForm
+                  mustVerifyEmail={mustVerifyEmail}
+                  status={status}
+                  friends={friends}
+                  className="max-w-xl"
+                />
+              </div>
             </div>
-
           </div>
-        </div>
-        <div className="sticky bottom-[0]">
-          <SidebarMini />
-        </div>
-      </>
-    ):(
-      <>
-        <div className="flex h-screen flex-col bg-background text-foreground sm:flex-row">
-          <SidebarMini />
-          <div className="order-3 h-screen w-full flex-1 flex-col items-center justify-center gap-4 border-l border-secondary sm:flex">
-            <UpdateProfileInformationForm
-              mustVerifyEmail={mustVerifyEmail}
-              status={status}
-              friends={friends}
-              className="max-w-xl"
-            />
+          <div className="fixed bottom-[0]">
+            <SidebarMini />
           </div>
-        </div>
-      </>
-    )}
-
-  </AppProvider>
+        </>
+      ) : (
+        <>
+          <div className="flex h-screen flex-col bg-background text-foreground sm:flex-row">
+            <SidebarMini />
+            <div className="order-3 h-screen w-full flex-1 flex-col items-center justify-center gap-4 border-l border-secondary sm:flex">
+              <UpdateProfileInformationForm
+                mustVerifyEmail={mustVerifyEmail}
+                status={status}
+                friends={friends}
+                className="max-w-xl"
+              />
+            </div>
+          </div>
+        </>
+      )}
+    </AppProvider>
   );
 }

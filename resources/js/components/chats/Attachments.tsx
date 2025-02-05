@@ -43,7 +43,7 @@ export default function Attachments({
     >
       <div className="sticky top-0 flex h-14 items-center gap-2 border-b border-secondary bg-background px-2 lg:shadow-sm">
         <button
-          className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary"
+          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
           onClick={() => setToggleShowMedia(!toggleShowMedia)}
         >
           <FaArrowLeft />
@@ -52,12 +52,12 @@ export default function Attachments({
       </div>
 
       <Tab.Group>
-        <Tab.List className="mx-2 mb-2 mt-4 flex rounded-full border border-secondary">
+        <Tab.List className="mx-2 mb-2 mt-4 flex rounded-md border border-secondary">
           <Tab as={Fragment}>
             {({ selected }) => (
               <button
                 className={clsx(
-                  "w-full rounded-full py-2 text-sm hover:bg-secondary focus:bg-secondary",
+                  "w-full rounded-md py-2 text-sm hover:bg-secondary focus:bg-secondary",
                   selected && "bg-secondary",
                 )}
               >
@@ -69,7 +69,7 @@ export default function Attachments({
             {({ selected }) => (
               <button
                 className={clsx(
-                  "w-full rounded-full py-2 text-sm hover:bg-secondary focus:bg-secondary",
+                  "w-full rounded-md py-2 text-sm hover:bg-secondary focus:bg-secondary",
                   selected && "bg-secondary",
                 )}
               >
@@ -81,7 +81,7 @@ export default function Attachments({
             {({ selected }) => (
               <button
                 className={clsx(
-                  "w-full rounded-full py-2 text-sm hover:bg-secondary focus:bg-secondary",
+                  "w-full rounded-md py-2 text-sm hover:bg-secondary focus:bg-secondary",
                   selected && "bg-secondary",
                 )}
               >
@@ -99,7 +99,7 @@ export default function Attachments({
                   .map((image) => (
                     <div
                       key={image.file_name}
-                      className="flex h-24 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-secondary"
+                      className="flex h-24 cursor-pointer items-center justify-center overflow-hidden rounded-md bg-secondary"
                       onClick={() => openPopupGallery(image)}
                     >
                       <img
@@ -127,7 +127,7 @@ export default function Attachments({
                         downloadFile(`${file.file_path}/${file.file_name}`)
                       }
                     >
-                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-secondary">
+                      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-secondary">
                         <BsFileEarmarkText className="text-xl" />
                       </div>
                       <div className="overflow-hidden">
@@ -153,7 +153,7 @@ export default function Attachments({
                     className="flex cursor-pointer items-center gap-2"
                     key={`link-` + index}
                   >
-                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-secondary">
+                    <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md bg-secondary">
                       <BsLink45Deg className="text-2xl" />
                     </div>
                     <div className="overflow-hidden">

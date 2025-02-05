@@ -12,6 +12,16 @@ import { BsCamera } from "react-icons/bs";
 import { UpdateProfileSchema } from "@/types/user";
 import Dropdown from "@/components/Dropdown";
 import { usePremium } from "@/hooks/use-premium";
+import {
+  UserCircleIcon,
+  ChevronRightIcon,
+  LockClosedIcon,
+  CurrencyDollarIcon,
+  ArrowsRightLeftIcon,
+  WrenchIcon,
+  KeyIcon,
+} from "@heroicons/react/24/outline"; // Import icons
+
 export default function ViewProfileInformation({
   mustVerifyEmail,
   status,
@@ -20,17 +30,16 @@ export default function ViewProfileInformation({
 }: {
   mustVerifyEmail: boolean;
   status?: string;
-  friends:any;
+  friends: any;
   className?: string;
 }) {
-  
   const user = usePage<PageProps>().props.auth;
   const avatarRef = useRef<HTMLImageElement>(null);
-  const { currentPremium,remainedDays } = usePremium();
+  const { currentPremium, remainedDays } = usePremium();
 
-  const jobs=["사장","기사"];
-  const categories = ["운송","무역"];
-  const capabilities = ["100","200"];
+  const jobs = ["사장", "기사"];
+  const categories = ["운송", "무역"];
+  const capabilities = ["100", "200"];
   const { data, setData, post, errors, processing, recentlySuccessful } =
     useForm<UpdateProfileSchema>({
       _method: "PATCH",
@@ -69,57 +78,72 @@ export default function ViewProfileInformation({
 
   return (
     <section className={className}>
- 
-
       <form onSubmit={submit} className="mt-6 space-y-6">
-        <div className="picture relative">
-          <img
-            src={user.avatar}
-            alt={user.name}
-            className="mx-auto h-20 w-20 rounded-full border border-secondary"
-            ref={avatarRef}
-          />
-          <p className="mx-auto mt-2 text-center">{user.name}</p>
+        <div className="rounded-md p-4 shadow">
+          <div className="picture relative">
+            <img
+              src={user.avatar}
+              alt={user.name}
+              className="mx-auto h-20 w-20 rounded-md border border-secondary"
+              ref={avatarRef}
+            />
+            <p className="mx-auto mt-2 text-center text-lg">
+              <b>{user.name}</b>
+            </p>
+          </div>
+          <div className="space-between inline">
+            <p className="inline text-sm">보유금액: ${user.balance}</p>
+            <p className="float-right inline text-sm">
+              {currentPremium == true
+                ? "정식회원:" + remainedDays + "일"
+                : "임시회원"}
+            </p>
+          </div>
         </div>
-        <div className="inline space-between">
-          <p className="inline">계정잔액: ${user.balance}</p>
-          <p className="inline float-right">
-            {currentPremium==true?"정식회원:"+remainedDays+"일":"임시회원"}
-          </p>
+        <div className="rounded-md shadow">
+          <Link href={route("profile.personal")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <UserCircleIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 개인정보"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
+          <Link href={route("profile.security")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <LockClosedIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 보안설정"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
+          <Link href={route("profile.charge")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <CurrencyDollarIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 계좌충전"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
+          <Link href={route("profile.btransfer")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <ArrowsRightLeftIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 계좌이채"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
+          <Link href={route("profile.account")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <WrenchIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 계정설정"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
+          <Link href={route("profile.premium")}>
+            <PrimaryButton className="!mt-1 flex w-full items-center !rounded-[0] !bg-[#07c160] text-left">
+              <KeyIcon className="inline h-6 w-6" />
+              <span className="text-lg">&nbsp;{" 정식회원등록"}</span>
+              <ChevronRightIcon className="ml-auto inline h-4 w-4" />
+            </PrimaryButton>
+          </Link>
         </div>
-        <Link href={route("profile.premium")}>
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0]">
-            정식회원등록
-          </PrimaryButton>
-        </Link>
-        <Link href={route("profile.personal")}>
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0]">
-            개인정보
-          </PrimaryButton>
-        </Link>
-        <Link href={route("profile.security")}>
-        
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0]">
-            보안설정
-          </PrimaryButton>
-        </Link>
-        <Link href={route("profile.account")}>
-
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0] ">
-            계정설정
-          </PrimaryButton>
-        </Link>
-        <Link href={route("profile.charge")}>
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0] ">
-            계좌충전
-          </PrimaryButton>
-        </Link>
-        <Link href={route("profile.btransfer")}>
-        
-          <PrimaryButton className=" w-full !bg-[forestgreen] !mt-1 !rounded-[0] ">
-            계좌이채
-          </PrimaryButton>
-        </Link>
       </form>
     </section>
   );

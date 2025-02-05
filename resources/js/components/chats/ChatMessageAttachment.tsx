@@ -55,7 +55,7 @@ export default function ChatMessageAttachment({
                   <img
                     src={`${attachment.file_path}/${attachment.file_name}`}
                     alt={attachment.original_name}
-                    className="h-full rounded-lg object-cover"
+                    className="h-full rounded-md object-cover"
                     onClick={() => setSelectedMedia(attachment)}
                   />
 
@@ -78,7 +78,7 @@ export default function ChatMessageAttachment({
                     className="relative flex w-full cursor-pointer items-center gap-2 rounded-xl bg-secondary/70 p-2 text-foreground transition-all hover:bg-secondary"
                     onClick={() => downloadFile(attachment)}
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-primary text-white">
                       <BsFileEarmarkText className="text-xl" />
                     </div>
                     <div className="flex-1 overflow-hidden">

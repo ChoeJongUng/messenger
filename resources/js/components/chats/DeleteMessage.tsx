@@ -31,7 +31,7 @@ export default function DeleteMessage({
     >
       <button
         type="button"
-        className="btn btn-secondary rounded-full p-2"
+        className="btn btn-secondary rounded-md p-2"
         onClick={deleteConfirmation}
       >
         <BsTrash />

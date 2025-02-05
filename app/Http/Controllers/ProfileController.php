@@ -202,7 +202,7 @@ class ProfileController extends Controller
 
         $request->user()->update($attributes);
 
-        return back();
+        return Redirect::to('/profile');
     }
 
     /**

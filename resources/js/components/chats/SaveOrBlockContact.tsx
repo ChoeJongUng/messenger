@@ -52,13 +52,13 @@ export default function SaveOrBlockContact() {
 
         <div className="flex gap-2">
           <button
-            className="btn btn-danger flex items-center gap-2 rounded-full"
+            className="btn btn-danger flex items-center gap-2 rounded-md"
             onClick={blockContactConfirmation}
           >
             <BsBan /> 차단
           </button>
           <button
-            className="btn btn-success flex items-center gap-2 rounded-full"
+            className="btn btn-success flex items-center gap-2 rounded-md"
             onClick={handleSaveContact}
           >
             <BsCheckCircle /> 확인
