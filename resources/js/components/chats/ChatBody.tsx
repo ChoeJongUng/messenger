@@ -27,7 +27,7 @@ export default function ChatBody({
     useChatMessageContext();
 
   const { ref: loadMoreRef, inView } = useInView();
-console.log(user)
+  console.log(user);
   useEffect(() => {
     const inViewObserver = setTimeout(() => {
       if (inView && loadMoreRef.length > 0) {
@@ -79,18 +79,22 @@ console.log(user)
           <div>
             {user.chat_type === CHAT_TYPE.GROUP_CHATS ? (
               <>
-                <h5 className="mt-1 text-lg font-medium">{auth.id === user.creator_id ? "나:" : `${user.creator.name} `}{user.name}</h5>
+                <h5 className="mt-1 text-lg font-medium">
+                  {auth.id === user.creator_id
+                    ? "나:"
+                    : `${user.creator.name} `}
+                  {user.name}
+                </h5>
                 <p className="text-sm text-secondary-foreground">
                   <p>신뢰할수 있다.</p>
 
-                  {moment(user.created_at).format("DD/MM/YY ")}{"일 "}
+                  {moment(user.created_at).format("DD/MM/YY ")}
+                  {"일 "}
                   {moment(user.created_at).format("H:mm")}
                   <br />
-                  <p className="p-4 max-w-[90vw] text-break">
-                  {user.description}
-
+                  <p className="max-w-[90vw] break-words p-4">
+                    {user.description}
                   </p>
-                  
                 </p>
               </>
             ) : (

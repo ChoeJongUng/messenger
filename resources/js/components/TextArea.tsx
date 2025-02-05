@@ -30,6 +30,7 @@ export default forwardRef(function TextInput(
   return (
     <textarea
       {...props}
+      rows={12}
       className={"form-control " + className}
       ref={localRef}
     />

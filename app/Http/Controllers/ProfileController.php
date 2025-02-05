@@ -12,6 +12,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Carbon\Carbon;
 class ProfileController extends Controller
 {
     /**
@@ -95,13 +96,20 @@ class ProfileController extends Controller
         $now=Date('Y-m-d h:i:s');
         $diff=-1;
         $is_premium = false;
-        if($finished_at>$now){
-            $diff = 15;
+        if(!is_null($paid_at)&&!is_null($finished_at)){
+            if($finished_at>$now){
+                $date1 = new \DateTime($finished_at);
+                $date2 = new \DateTime($now);
+
+                // Calculate the difference
+                $diff = $date1->diff($date2);
+            }
         }
-        if($diff>=0) $is_premium = true;
+
+        if($diff->days>=0) $is_premium = true;
         return response()->json([
             'is_premium'=>$is_premium,
-            'diff'=>$diff
+            'diff'=>$diff->days
         ]);
 
     }
@@ -120,7 +128,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function transfer(Request $request): RedirectResponse
+    public function transfer(Request $request): Response
     {
         $balance = $request->input('balance')-$request->input('amount');
         $user = $request->user();
@@ -132,15 +140,42 @@ class ProfileController extends Controller
             'balance'=>$target->balance+$request->input('amount')
         ]);
 
-        return Redirect::to('/profile');
+        // return Redirect::to('/profile');
+        return Inertia::render('profile/Edit', [
+            'status' => 'Transaction completed successfully!',
+            'status_type' => 'transfer' // You can also pass the message type (success, error, etc.)
+        ]);
     }
     public function purchase(Request $request): RedirectResponse
     {
         $user = $request->user();
+
+        $paid_at = auth()->user()->paid_at;
+        $finished_at = auth()->user()->finished_at;
+        $now=Date('Y-m-d h:i:s');
+        $diff=-1;
+        $is_premium = false;
+        if(!is_null($paid_at)&&!is_null($finished_at)){
+            if($finished_at>$now){
+                $date1 = new \DateTime($finished_at);
+                $date2 = new \DateTime($now);
+
+                // Calculate the difference
+                $diff = $date1->diff($date2);
+            }
+        }
+        if($diff->days>=0) $is_premium = true;
         $balance = $user->balance-1000;
-        $paid_at = Date('Y-m-d h:i:s');
-        // $finished_at = now+30
-        $finished_at = '2025-03-15 12:22:22';
+
+        if($is_premium==false){
+            $paid_at = Carbon::now()->format('Y-m-d H:i:s');  // Using Carbon to get the current date and time
+            $finished_at = Carbon::now()->addDays(30)->format('Y-m-d H:i:s');  // Add 30 days to the current date
+        }else{
+            $paid_at = Carbon::now()->format('Y-m-d H:i:s');  // Using Carbon to get the current date and time
+            $finished_at = Carbon::parse($finished_at)->addDays(30)->format('Y-m-d H:i:s');
+        }
+
+
         $user->update([
             'balance' => $balance,
             'paid_at'=>$paid_at,

@@ -10,7 +10,7 @@ import {
 } from "react";
 import { Link, InertiaLinkProps } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
-
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid"; // Import icons
 const DropDownContext = createContext<{
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
@@ -42,7 +42,18 @@ const Trigger = ({ children }: PropsWithChildren) => {
 
   return (
     <>
-      <div onClick={toggleOpen}>{children}</div>
+      <div onClick={toggleOpen}>
+        {children}
+        {route().current("profile.personal") == true && (
+          <div className="absolute right-[5px] top-[25%] ml-2">
+            {open ? (
+              <ChevronUpIcon className="h-5 w-5 text-gray-600" />
+            ) : (
+              <ChevronDownIcon className="h-5 w-5 text-gray-600" />
+            )}
+          </div>
+        )}
+      </div>
 
       {open && (
         <div

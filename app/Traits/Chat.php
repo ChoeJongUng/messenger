@@ -19,16 +19,20 @@ trait Chat
 
     public function chats() 
     {
-        $group = GroupMember::where('member_id', auth()->id())
-            ->select('member_id', 'group_id')
-            ->groupBy('member_id', 'group_id');
-
+        // $group = GroupMember::where('member_id', auth()->id())
+        //     ->select('member_id', 'group_id')
+        //     ->groupBy('member_id', 'group_id');
+$group = ChatGroup::select('id as group_id'); 
         if (request()->filled('query')) {
-            $chatGroup = ChatGroup::joinSub($group, 'g', function (JoinClause $join) {
-                    $join->on('chat_groups.id', 'g.group_id');
-                })
-                ->where('name', 'LIKE', '%'. request('query') .'%')
-                ->select('id', 'name', 'avatar', 'member_id','description');
+            // $chatGroup = ChatGroup::joinSub($group, 'g', function (JoinClause $join) {
+            //         $join->on('chat_groups.id', 'g.group_id');
+            //     })
+            //     ->where('name', 'LIKE', '%'. request('query') .'%')
+            //     ->select('id', 'name', 'avatar', 'member_id','description');
+            $chatGroup = ChatGroup::where('name', 'LIKE', '%' . request('query') . '%')
+                ->select('id', 'name', 'avatar', 'description')
+                ->addSelect(\DB::raw(auth()->id() . ' as member_id'))  // Add the current member ID for context
+                ->get();
             $contacts = ChatContact::where('user_id', auth()->id())
                 ->select('contact_id', 'is_contact_blocked')
                 ->groupBy('contact_id', 'is_contact_blocked');
@@ -184,10 +188,10 @@ trait Chat
     {
         if (!auth()->check()) return 0;
 
-        $group = GroupMember::where('member_id', auth()->id())
-            ->select('member_id', 'group_id')
-            ->groupBy('member_id', 'group_id');
-
+        // $group = GroupMember::where('member_id', auth()->id())
+        //     ->select('member_id', 'group_id')
+        //     ->groupBy('member_id', 'group_id');
+$group = ChatGroup::select('id as group_id'); 
         $latestMessage = $this->latestMessageForEachChat($group);
 
         $chats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
