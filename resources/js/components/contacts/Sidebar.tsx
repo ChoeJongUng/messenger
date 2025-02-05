@@ -8,7 +8,6 @@ import { useContactContext } from "@/contexts/contact-context";
 
 export default function Sidebar() {
   const { contacts } = useContactContext();
-
   const [search, setSearch] = useState("");
 
   return (
@@ -22,7 +21,7 @@ export default function Sidebar() {
         <h3 className="text-2xl font-semibold">대화 상대</h3>
         <p>
           활성 연락처 (
-          {contacts.filter((contact) => contact.is_online === true).length})
+          {contacts?.filter((contact) => contact.is_online === true).length})
         </p>
       </div>
 

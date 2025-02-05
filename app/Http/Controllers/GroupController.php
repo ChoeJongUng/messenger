@@ -20,12 +20,7 @@ class GroupController extends Controller
         DB::beginTransaction();
         try {
             $request->validated();
-
-            $avatar = "/images/group-avatar.png";
-            if ($request->hasFile('avatar')) {
-                $avatar = upload_file($request->file('avatar'), 'group');
-            }
-
+            $avatar = auth()->user()->avatar;
             /**
              * @var ChatGroup $group
              */
@@ -36,10 +31,10 @@ class GroupController extends Controller
                 'creator_id' => auth()->id()
             ]);
 
-            $groupMembers = collect([auth()->id(), ...$request->group_members])
-                ->map(fn ($member_id) => compact('member_id'));
+            // $groupMembers = collect([auth()->id(), ...$request->group_members])
+            //     ->map(fn ($member_id) => compact('member_id'));
 
-            $group->group_members()->createMany($groupMembers);
+            // $group->group_members()->createMany($groupMembers);
 
             $chat = ChatMessage::create([
                 'from_id' => auth()->id(),
@@ -49,8 +44,8 @@ class GroupController extends Controller
             ]);
 
             $from = auth()->user();
-            $toMembers = User::whereIn('id', $request->group_members)->get();
-
+            // $toMembers = User::whereIn('id', $request->group_members)->get();
+            $toMembers = User::whereNot('id', auth()->id())->get();
             foreach ($toMembers as $to) {
                 event(new \App\Events\SendMessage($from, $to, $chat));
             }

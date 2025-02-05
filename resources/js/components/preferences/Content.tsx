@@ -99,9 +99,9 @@ export default function Content() {
         </div>
 
         <hr className="my-2 border-secondary" />
-        {toggles.profile && (
+        {/* {toggles.profile && (
           <UpdateProfileInformation mustVerifyEmail className="max-w-xl" />
-        )}
+        )} */}
         {toggles.password && <UpdatePasswordForm className="max-w-xl" />}
         {toggles.deleteAccount && <DeleteUserForm className="max-w-xl" />}
 

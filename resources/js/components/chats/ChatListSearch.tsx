@@ -39,7 +39,7 @@ export default function ChatListSearch({
       </span>
       <input
         type="text"
-        placeholder="대화상대 검색"
+        placeholder={route().current("business.*")==true?"거래제안 검색":"대화상대 검색"}
         className="w-full rounded-lg border-secondary bg-background pl-10 focus:border-secondary focus:ring-transparent"
         value={search}
         onChange={handleOnChange}

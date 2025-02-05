@@ -20,6 +20,10 @@ export type User = {
   job: string;
   category: string;
   capability: string;
+  paid_at:string;
+  finished_at:string;
+  balance:number;
+  premium:number;
 } & Contact;
 
 export type Contact = {

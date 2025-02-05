@@ -6,7 +6,7 @@ export default function ContentEmpty() {
         alt="message-empty.png"
         className="w-[245px]"
       />
-      <h5 className="text-xl font-medium">대화 이력이 없습니다.</h5>
+      <h5 className="text-xl font-medium">{route().current("business.*")==true?"거래제안이 비였습니다.":"대화 이력이 없습니다."}</h5>
     </div>
   );
 }

@@ -10,6 +10,7 @@ use App\Models\GroupMember;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
+use Illuminate\Support\Facades\DB;
 
 trait Chat
 {
@@ -27,8 +28,7 @@ trait Chat
                     $join->on('chat_groups.id', 'g.group_id');
                 })
                 ->where('name', 'LIKE', '%'. request('query') .'%')
-                ->select('id', 'name', 'avatar', 'member_id');
-
+                ->select('id', 'name', 'avatar', 'member_id','description');
             $contacts = ChatContact::where('user_id', auth()->id())
                 ->select('contact_id', 'is_contact_blocked')
                 ->groupBy('contact_id', 'is_contact_blocked');
@@ -105,6 +105,8 @@ trait Chat
                     $mapped->from_id = $chat->from_id;
                     $mapped->is_read = $seenInId->filter(fn ($item) => $item->id === auth()->id())->count() > 0;
                     $mapped->is_reply = $chat->another_user->id === $chat->from_id;
+                    $mapped->description = $chat->description;
+                    $mapped->description = $chat->description;
                     $mapped->is_online = $chat->another_user->is_online == true;
                     $mapped->is_contact_blocked = auth()->user()->is_contact_blocked($chat->another_user->id);
                     $mapped->chat_type = ChatMessage::CHAT_TYPE;
@@ -115,7 +117,7 @@ trait Chat
                     : $attachment;
                 } else {
                     $mapped->id = $chat->to->id;
-                    $mapped->name = $chat->to->name;
+                    $mapped->name = $from.$chat->to->name;
                     $mapped->avatar = $chat->to->avatar;
                     $mapped->from_id = $chat->from_id;
                     $mapped->is_read = $seenInId->filter(fn ($item) => $item->id === auth()->id())->count() > 0;
@@ -123,6 +125,9 @@ trait Chat
                     $mapped->is_online = false;
                     $mapped->is_contact_blocked = false;
                     $mapped->chat_type = ChatMessage::CHAT_GROUP_TYPE;
+                    $description = DB::table('chat_groups')->where('id',$chat->to->id)->first()->description;
+                    $mapped->description = \Str::limit(strip_tags($description), 100);
+
                     $mapped->created_at = $chat->created_at;
 
                     if (str_contains($chat->body, 'created group "'. $chat->to->name .'"') && $chat->to->creator_id !== auth()->id()) {

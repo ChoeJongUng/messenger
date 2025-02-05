@@ -32,35 +32,47 @@ export default function SidebarMini() {
         route().current("chats.show") ? "hidden" : "flex",
       )}
     >
-      <Link
-        href={route("archived_chats.index")}
+      {/* <Link
+        href={route("business.index")}
         className={clsx(
           "!block flex flex-1 items-center justify-center rounded-lg p-3 transition-all hover:bg-secondary sm:flex-initial",
-          route().current("archived_chats.*") && "bg-secondary",
+          
         )}
       >
-        <BsStack className="m-auto h-6 w-6" />
-        <p className="pt-1 text-center text-[12px]">거래제안</p>
-      </Link>
+        <img
+            src={route().current("business.*")==true?"/images/ic_menu_mms1.png":"/images/ic_menu_mms0.png"}
+            alt=""
+            className="m-auto h-6 w-6"
+          />
+        <p className={route().current("business.*")?"pt-1 text-center text-[12px] text-[forestgreen]":"pt-1 text-center text-[12px]"}>거래제안</p>
+      </Link> */}
       <Link
-        href={route("archived_chats.index")}
+        href={route("business.index")}
         className={clsx(
           "!block flex flex-1 items-center justify-center rounded-lg p-3 transition-all hover:bg-secondary sm:flex-initial",
-          route().current("archived_chats.*") && "bg-secondary",
+          
         )}
       >
-        <BsBank className="m-auto h-6 w-6" />
-        <p className="pt-1 text-center text-[12px] ">신용거래</p>
+        <img
+            src={route().current("business.*")==true?"/images/lv.png":"/images/lu.png"}
+            alt=""
+            className="m-auto h-6 w-6"
+          />
+        <p className={route().current("business.*")?"pt-1 text-center text-[12px] text-[forestgreen]":"pt-1 text-center text-[12px]"}>거래제안</p>
       </Link>
       <Link
         href={route("chats.index")}
         className={clsx(
           "relative !block flex flex-1 items-center justify-center rounded-lg p-3 transition-all hover:bg-secondary sm:flex-initial",
-          route().current("chats.*") && "bg-secondary",
+          
         )}
       >
-        <BsChat className="m-auto h-6 w-6" />
-        <p className="pt-1 text-center text-[12px]">채팅</p>
+        <img
+            src={route().current("chats.*")==true?"/images/k_.png":"/images/k9.png"}
+            alt=""
+            className="m-auto h-6 w-6"
+          />
+        <p className={route().current("chats.*")?"pt-1 text-center text-[12px] text-[forestgreen]":"pt-1 text-center text-[12px]"}>채팅</p>
         {notificationCount > 0 && <BadgeNotification />}
       </Link>
 
@@ -68,34 +80,39 @@ export default function SidebarMini() {
         href={route("contacts.index")}
         className={clsx(
           "!block flex flex-1 items-center justify-center rounded-lg p-3 transition-all hover:bg-secondary sm:flex-initial",
-          route().current("contacts.*") && "bg-secondary",
+          
         )}
       >
-        <BsPeople className="m-auto h-6 w-6" />
-        <p className="pt-1 text-center text-[12px] ">회원</p>
+        <img
+            src={route().current("contacts.*")==true?"/images/kg.png":"/images/kf.png"}
+            alt=""
+            className="m-auto h-6 w-6"
+          />
+        <p className={route().current("contacts.*")?"pt-1 text-center text-[12px] text-[forestgreen]":"pt-1 text-center text-[12px]"}>회원</p>
       </Link>
 
       {width <= 640 ? (
         <Link
-          href={route("preferences.index")}
+          href={route("profile.edit")}
           className={clsx(
             "!block flex flex-1 items-center justify-center rounded-lg p-3 transition-all hover:bg-secondary sm:flex-initial",
-            route().current("preferences.index") && "bg-secondary",
+            
           )}
         >
           <img
-            src={auth.avatar}
+            src={route().current("preferences.index")==true||route().current("profile.*")==true?"/images/lq.png":"/images/lp.png"}
             alt=""
             className="m-auto h-8 w-8 rounded-full border border-secondary sm:h-10 sm:w-10"
           />
-          <p className="pt-1 text-center text-[12px]">나</p>
+          <p className={route().current("preferences.index")||route().current("profile.*")==true?"pt-1 text-center text-[12px] text-[forestgreen]":"pt-1 text-center text-[12px]"}>나</p>
         </Link>
       ) : (
         <div className="relative flex flex-1 cursor-pointer items-center justify-center rounded-lg px-3 transition-all hover:bg-secondary sm:mt-auto sm:flex-initial sm:px-0 sm:hover:bg-transparent">
           <Dropdown>
             <Dropdown.Trigger>
               <img
-                src={auth.avatar}
+                src="/images/lp.png"
+
                 alt=""
                 className="h-8 w-8 rounded-full border border-secondary sm:h-10 sm:w-10"
               />

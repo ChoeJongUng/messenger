@@ -27,7 +27,7 @@ export default function ChatBody({
     useChatMessageContext();
 
   const { ref: loadMoreRef, inView } = useInView();
-
+console.log(user)
   useEffect(() => {
     const inViewObserver = setTimeout(() => {
       if (inView && loadMoreRef.length > 0) {
@@ -77,20 +77,32 @@ export default function ChatBody({
             />
           </div>
           <div>
-            <h5 className="mt-1 text-lg font-medium">{user.name}</h5>
             {user.chat_type === CHAT_TYPE.GROUP_CHATS ? (
-              <p className="text-sm text-secondary-foreground">
-                {auth.id === user.creator_id ? "You " : `${user.creator.name} `}
-                created group "{user.name}" <br />
-                on {moment(user.created_at).format("DD/MM/YY ")}
-                at {moment(user.created_at).format("H:mm")}
-              </p>
+              <>
+                <h5 className="mt-1 text-lg font-medium">{auth.id === user.creator_id ? "나:" : `${user.creator.name} `}{user.name}</h5>
+                <p className="text-sm text-secondary-foreground">
+                  <p>신뢰할수 있다.</p>
+
+                  {moment(user.created_at).format("DD/MM/YY ")}{"일 "}
+                  {moment(user.created_at).format("H:mm")}
+                  <br />
+                  <p className="p-4 max-w-[90vw] text-break">
+                  {user.description}
+
+                  </p>
+                  
+                </p>
+              </>
             ) : (
-              <p className="text-sm text-secondary-foreground">
-                연결 <br /> {moment(user.created_at).format("DD/MM/YY ")}
-                {"일 "}
-                {moment(user.created_at).format("H:mm")}시
-              </p>
+              <>
+                <h5 className="mt-1 text-lg font-medium">{user.name}</h5>
+
+                <p className="text-sm text-secondary-foreground">
+                  연결 <br /> {moment(user.created_at).format("DD/MM/YY ")}
+                  {"일 "}
+                  {moment(user.created_at).format("H:mm")}시
+                </p>
+              </>
             )}
           </div>
         </div>

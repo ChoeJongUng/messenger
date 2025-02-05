@@ -23,7 +23,7 @@ export default function ChatHeader({
     <div className="flex h-14 items-center justify-between border-b border-secondary p-2 shadow-sm">
       <div className="flex items-center gap-2">
         <Link
-          href={route("chats.index")}
+          href={user.chat_type === CHAT_TYPE.CHATS?route("chats.index"):route("business.index")}
           className="flex h-8 w-8 items-center justify-center rounded-full hover:bg-secondary focus:bg-secondary sm:hidden"
         >
           <FaArrowLeft />

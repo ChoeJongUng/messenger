@@ -14,10 +14,8 @@ class GroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:4',
-            'avatar' => 'nullable|mimes:png,jpg,jpeg|max:2048',
+            'name' => 'required|min:1',
             'description' => 'nullable',
-            'group_members' => 'required|array|min:2'
         ];
     }
 }

@@ -8,7 +8,7 @@ import ContentEmpty from "@/components/chats/ContentEmpty";
 
 export default function Chats() {
   return (
-    <AppLayout title={route().current("chats.*")==true?"채팅":"거래제안"}>
+    <AppLayout title="채팅">
       <ChatProvider>
         <ModalProvider>
           <SidebarMini />

@@ -165,7 +165,7 @@ const Action = ({ chat }: ActionProps) => {
           </Dropdown.Button>
         )}
 
-        {route().current("chats.*") ? (
+        {/* {route().current("chats.*") ? (
           <Dropdown.Button onClick={handleArchiveChat}>
             <div className="flex items-center gap-2">
               <BsArchive />
@@ -179,7 +179,7 @@ const Action = ({ chat }: ActionProps) => {
               채팅 보관소 해제
             </div>
           </Dropdown.Button>
-        )}
+        )} */}
 
         <Dropdown.Button onClick={deleteChatConfirmation}>
           <div className="flex items-center gap-2">

@@ -67,9 +67,9 @@ export default function AddNewGroup() {
   return (
     <form onSubmit={handleOnSubmit} className="space-y-4">
       <Modal>
-        <Modal.Header title="새로운 그룹" onClose={closeModal} />
+        <Modal.Header title="새 거래제안" onClose={closeModal} />
         <Modal.Body as={Fragment}>
-          <div className="picture relative">
+          {/* <div className="picture relative">
             <img
               src="/images/group-avatar.png"
               alt="group-avatar.png"
@@ -92,7 +92,7 @@ export default function AddNewGroup() {
             </label>
 
             <InputError className="mt-2 text-center" message={errors.avatar} />
-          </div>
+          </div> */}
 
           <div className="space-y-2">
             <InputLabel htmlFor="name" value="주제" />
@@ -109,7 +109,7 @@ export default function AddNewGroup() {
           </div>
 
           <div className="space-y-2">
-            <InputLabel htmlFor="description" value="설명" />
+            <InputLabel htmlFor="description" value="내용" />
 
             <TextArea
               id="description"
@@ -121,7 +121,7 @@ export default function AddNewGroup() {
             <InputError className="mt-2" message={errors.description} />
           </div>
 
-          <div className="relative space-y-2">
+          {/* <div className="relative space-y-2">
             <InputLabel htmlFor="group_members" value="성원 추가" />
 
             <ComboBox
@@ -132,7 +132,7 @@ export default function AddNewGroup() {
             />
 
             <InputError className="mt-2" message={errors.group_members} />
-          </div>
+          </div> */}
         </Modal.Body>
 
         <Modal.Footer className="flex justify-between gap-4">

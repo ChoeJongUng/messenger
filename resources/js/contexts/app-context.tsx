@@ -51,7 +51,7 @@ type Action =
     };
 
 const initialState: State = {
-  theme: localStorage.getItem("theme") || "system",
+  theme: localStorage.getItem("theme") || "light",
   auth: {
     id: "",
     name: "",

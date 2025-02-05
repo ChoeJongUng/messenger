@@ -5,6 +5,7 @@ export type Chat = {
   id: string;
   name: string;
   avatar: string;
+  description: string;
   message_id: string;
   from_id: string;
   body: string;

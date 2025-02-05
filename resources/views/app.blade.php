@@ -25,7 +25,7 @@
 
     <script>
         const html = document.documentElement
-        const theme = localStorage.getItem('theme')
+        const theme = localStorage.getItem('theme') || "light"
 
         if (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)')) {
             html.classList.add('dark')

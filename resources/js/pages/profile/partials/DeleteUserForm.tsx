@@ -58,7 +58,7 @@ export default function DeleteUserForm({
         </p>
       </header>
 
-      <DangerButton onClick={confirmUserDeletion}>계정 삭제</DangerButton>
+      <DangerButton onClick={confirmUserDeletion} className="w-full">계정 삭제</DangerButton>
 
       <Modal show={confirmingUserDeletion} onClose={closeModal}>
         <form onSubmit={deleteUser} className="p-6">

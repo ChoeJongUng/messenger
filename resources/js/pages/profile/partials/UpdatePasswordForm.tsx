@@ -103,7 +103,7 @@ export default function UpdatePasswordForm({
         </div>
 
         <div className="flex items-center gap-4">
-          <PrimaryButton disabled={processing}>저장</PrimaryButton>
+          <PrimaryButton disabled={processing} className="w-full bg-[forestgreen]">저장</PrimaryButton>
           <Transition
             show={recentlySuccessful}
             enter="transition ease-in-out"
