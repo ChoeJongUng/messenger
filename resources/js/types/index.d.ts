@@ -17,6 +17,7 @@ export type PageProps<
   error_msg: string | null;
   success_msg: string | null;
   notification_count: number;
+  notification_count_group: number;
 };
 
 export type ChatPageProps = PageProps<{ chats: ChatPaginate }>;

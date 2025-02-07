@@ -1,4 +1,4 @@
-import { fetchNotification } from "@/api/chats";
+import { fetchNotification, fetchNotificationGroup } from "@/api/chats";
 import Alert from "@/components/Alert";
 import { PageProps } from "@/types";
 import { User } from "@/types/user";
@@ -21,11 +21,13 @@ type State = {
   errorMsg?: string | null;
   successMsg?: string | null;
   notificationCount: number;
+  notificationCountGroup: number;
   setTheme: (value: string) => void;
   setAuth: (value: User) => void;
   setErrorMsg: (value: string | null) => void;
   setSuccessMsg: (value: string | null) => void;
   syncNotification: () => void;
+  syncNotificationGroup: () => void;
 };
 
 type Action =
@@ -47,6 +49,10 @@ type Action =
     }
   | {
       type: "SET_NOTIFICATION_COUNT";
+      payload: number;
+    }
+  | {
+      type: "SET_NOTIFICATION_COUNT_GROUP";
       payload: number;
     };
 
@@ -78,11 +84,13 @@ const initialState: State = {
     premium: 0,
   },
   notificationCount: 0,
+  notificationCountGroup: 0,
   setTheme: () => {},
   setAuth: () => {},
   setErrorMsg: () => {},
   setSuccessMsg: () => {},
   syncNotification: () => {},
+  syncNotificationGroup: () => {},
 };
 
 const reducer = (state: State, action: Action) => {
@@ -139,6 +147,11 @@ const reducer = (state: State, action: Action) => {
         ...state,
         notificationCount: action.payload,
       };
+    case "SET_NOTIFICATION_COUNT_GROUP":
+      return {
+        ...state,
+        notificationCountGroup: action.payload,
+      };
   }
 };
 
@@ -167,8 +180,12 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
 
   const setNotificationCount = (value: number) =>
     dispatch({ type: "SET_NOTIFICATION_COUNT", payload: value });
+  const setNotificationCountGroup = (value: number) =>
+    dispatch({ type: "SET_NOTIFICATION_COUNT_GROUP", payload: value });
 
   const syncNotification = async () => {
+    console.log("callde");
+
     const lastSync = localStorage.getItem("last-sync-notification");
     const currentTime = moment();
 
@@ -183,10 +200,26 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       setNotificationCount(response.data.data.notification_count);
     });
   };
+  const syncNotificationGroup = async () => {
+    console.log("callde");
+    const lastSync = localStorage.getItem("last-sync-notification-group");
+    const currentTime = moment();
 
+    if (lastSync && currentTime.diff(moment(parseInt(lastSync))) < 3000) return;
+
+    localStorage.setItem(
+      "last-sync-notification-group",
+      currentTime.valueOf().toString(),
+    );
+
+    return await fetchNotificationGroup().then((response) => {
+      setNotificationCountGroup(response.data.data.notification_count_group);
+    });
+  };
   useEffect(() => {
     setAuth(props.auth);
     setNotificationCount(props.notification_count);
+    setNotificationCountGroup(props.notification_count_group);
     setIsFirstLoading(false);
 
     if (props.error_msg) setErrorMsg(props.error_msg);
@@ -196,6 +229,9 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
       ".send-message",
       () => {
         syncNotification().then(() => {
+          notificationRef.current?.play();
+        });
+        syncNotificationGroup().then(() => {
           notificationRef.current?.play();
         });
       },
@@ -208,8 +244,11 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
   }, [state.errorMsg, state.successMsg]);
 
   useEffect(() => {
-    !isFirstLoading && replaceBadgeNotificationCount(state.notificationCount);
-  }, [state.notificationCount]);
+    !isFirstLoading &&
+      replaceBadgeNotificationCount(
+        state.notificationCount + state.notificationCountGroup,
+      );
+  }, [state.notificationCount, state.notificationCountGroup]);
 
   const value = {
     ...state,
@@ -218,11 +257,15 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     notificationCount: isFirstLoading
       ? props.notification_count
       : state.notificationCount,
+    notificationCountGroup: isFirstLoading
+      ? props.notification_count_group
+      : state.notificationCountGroup,
     setTheme,
     setAuth,
     setErrorMsg,
     setSuccessMsg,
     syncNotification,
+    syncNotificationGroup,
   };
 
   return (

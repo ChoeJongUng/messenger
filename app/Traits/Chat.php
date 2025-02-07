@@ -184,39 +184,97 @@ $group = ChatGroup::select('id as group_id');
         return $latestMessage;
     }
 
+    // public function notificationCount() 
+    // {
+    //     if (!auth()->check()) return 0;
+
+    //     // $group = GroupMember::where('member_id', auth()->id())
+    //     //     ->select('member_id', 'group_id')
+    //     //     ->groupBy('member_id', 'group_id');
+    //     $group = ChatGroup::select('id as group_id'); 
+    //     $latestMessage = $this->latestMessageForEachChat($group);
+
+    //     $chats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
+    //         ->joinSub($latestMessage, 'lm', function (JoinClause $join) {
+    //             $join->on('chat_messages.sort_id', 'lm.sort_id')
+    //                  ->on(function (JoinClause $join) {
+    //                         $join->on('chat_messages.from_id', 'lm.another_user_id')
+    //                              ->orOn('chat_messages.to_id', 'lm.another_user_id');
+    //                  });
+    //         })
+    //         ->leftJoin('archived_chats as ac', function (JoinClause $join) {
+    //              $join->on('ac.from_id', 'lm.another_user_id')
+    //                   ->where('ac.archived_by', auth()->id());
+    //         })
+    //         ->where(function (Builder $query) use ($group) {
+    //             $query->where('chat_messages.from_id', auth()->id())
+    //                   ->orWhere('chat_messages.to_id', auth()->id())
+    //                   ->orWhereIn('to_id', $group->pluck('group_id')->toArray());
+    //         })
+    //         ->notSeen()
+    //         ->whereNull('ac.id')
+    //         ->select('1')
+    //         ->count();
+            
+    //     return $chats;
+    // }
     public function notificationCount() 
     {
         if (!auth()->check()) return 0;
 
-        // $group = GroupMember::where('member_id', auth()->id())
-        //     ->select('member_id', 'group_id')
-        //     ->groupBy('member_id', 'group_id');
-$group = ChatGroup::select('id as group_id'); 
+        $group = ChatGroup::select('id as group_id'); 
         $latestMessage = $this->latestMessageForEachChat($group);
 
         $chats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
             ->joinSub($latestMessage, 'lm', function (JoinClause $join) {
                 $join->on('chat_messages.sort_id', 'lm.sort_id')
-                     ->on(function (JoinClause $join) {
+                    ->on(function (JoinClause $join) {
                             $join->on('chat_messages.from_id', 'lm.another_user_id')
-                                 ->orOn('chat_messages.to_id', 'lm.another_user_id');
-                     });
+                                ->orOn('chat_messages.to_id', 'lm.another_user_id');
+                    });
             })
             ->leftJoin('archived_chats as ac', function (JoinClause $join) {
-                 $join->on('ac.from_id', 'lm.another_user_id')
-                      ->where('ac.archived_by', auth()->id());
+                $join->on('ac.from_id', 'lm.another_user_id')
+                    ->where('ac.archived_by', auth()->id());
             })
-            ->where(function (Builder $query) use ($group) {
+            ->where(function (Builder $query) {
                 $query->where('chat_messages.from_id', auth()->id())
-                      ->orWhere('chat_messages.to_id', auth()->id())
-                      ->orWhereIn('to_id', $group->pluck('group_id')->toArray());
+                    ->orWhere('chat_messages.to_id', auth()->id());
             })
+            ->whereNotIn('chat_messages.to_id', ChatGroup::pluck('id')->toArray()) // Exclude group chats
             ->notSeen()
             ->whereNull('ac.id')
-            ->select('1')
+            ->selectRaw('1')
             ->count();
             
         return $chats;
+    }
+    public function notificationCountGroup() 
+    {
+        if (!auth()->check()) return 0;
+
+        $group = ChatGroup::select('id as group_id'); 
+        $latestMessage = $this->latestMessageForEachChat($group);
+
+        $groupChats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
+            ->joinSub($latestMessage, 'lm', function (JoinClause $join) {
+                $join->on('chat_messages.sort_id', 'lm.sort_id')
+                    ->on(function (JoinClause $join) {
+                            $join->on('chat_messages.from_id', 'lm.another_user_id')
+                                ->orOn('chat_messages.to_id', 'lm.another_user_id');
+                    });
+            })
+            ->leftJoin('archived_chats as ac', function (JoinClause $join) {
+                $join->on('ac.from_id', 'lm.another_user_id')
+                    ->where('ac.archived_by', auth()->id());
+            })
+            ->whereIn('chat_messages.to_id', ChatGroup::pluck('id')->toArray()) // **Include only group chats**
+            ->notSeen()
+            ->whereNull('ac.id')
+            ->selectRaw('1')
+            ->count();
+            
+        return $groupChats;
     }
 
     public function messages(string $id) 

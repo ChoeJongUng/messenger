@@ -5,11 +5,13 @@ import ChatList from "@/components/chats/ChatList";
 import { useChatContext } from "@/contexts/chat-context";
 import clsx from "clsx";
 import { useModalContext } from "@/contexts/modal-context";
+import { usePage } from "@inertiajs/react";
+import { PageProps } from "@/types";
 
 export default function Sidebar() {
   const { chats } = useChatContext();
   const { openModal } = useModalContext();
-
+  const user = usePage<PageProps>().props.auth;
   const [search, setSearch] = useState("");
 
   const addNewGroup = () => {
@@ -27,12 +29,18 @@ export default function Sidebar() {
       )}
     >
       <div className="flex items-center justify-between px-2 pt-2 sm:pb-0">
-        <h3 className="text-2xl font-semibold">
-          {route().current("business.*") == true ? "거래제안" : "채팅"}
+        <h3 className="text-center text-lg">
+          {route().current("business.*") == true ? (
+            <>
+              <b className="font-bold">{user.name}</b>님에게 적합한 거래제안
+            </>
+          ) : (
+            "채팅"
+          )}
         </h3>
         {route().current("business.*") == true ? (
           <button
-            className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-white"
+            className="flex h-6 w-6 items-center justify-center rounded-full bg-[#07c160] text-white"
             onClick={addNewGroup}
           >
             <FaPlusCircle />

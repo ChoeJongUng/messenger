@@ -42,7 +42,8 @@ class HandleInertiaRequests extends Middleware
             ],
             'error_msg' => fn () => $request->session()->get('error_msg'),
             'success_msg' => fn () => $request->session()->get('success_msg'),
-            'notification_count' => fn () => $this->notificationCount()
+            'notification_count' => fn () => $this->notificationCount(),
+            'notification_count_group' => fn () => $this->notificationCountGroup()
         ];
     }
 }

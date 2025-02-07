@@ -26,14 +26,17 @@ export default function ContactList() {
   if (contacts.length === 0) return;
 
   return (
-    <div className="relative max-h-[calc(100vh_-_158px)] flex-1 overflow-y-auto px-2 sm:max-h-max sm:pb-2">
+    <div className="relative max-h-[calc(100vh_-_158px)] flex-1 overflow-y-auto sm:max-h-max sm:pb-2">
       {contacts
         .sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) =>
           a.is_online === b.is_online ? 0 : a.is_online ? -1 : 1,
         )
         .map((contact) => (
-          <div className="group relative flex items-center" key={contact.id}>
+          <div
+            className=" group relative flex items-center border border-secondary"
+            key={contact.id}
+          >
             <Link
               href={route("chats.show", contact.id)}
               as="button"
@@ -51,12 +54,25 @@ export default function ContactList() {
                 {contact.is_online && <BadgeOnline />}
               </div>
 
-              <div className="overflow-hidden">
+              {/* Wrapper div to control spacing */}
+              <div className="flex w-full items-center justify-between">
+                {/* Contact Name */}
                 <h5 className="truncate font-medium">{contact.name}</h5>
+
+                {/* City on the right */}
+                <span className="text-sm text-gray-500">
+                  {contact.country && (
+                    <img
+                      className="inline h-5 w-7"
+                      src={`/images/${contact.country}.png`}
+                      alt="국기"
+                    />
+                  )}
+                </span>
               </div>
             </Link>
 
-            <ContactListAction contact={contact} />
+            {/* <ContactListAction contact={contact} /> */}
           </div>
         ))}
 

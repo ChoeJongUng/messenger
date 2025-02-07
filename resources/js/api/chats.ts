@@ -19,7 +19,11 @@ export const fetchNotification = (): Promise<
 > => {
   return window.axios.get(route("chats.notification"));
 };
-
+export const fetchNotificationGroup = (): Promise<
+  AxiosResponse<{ data: { notification_count_group: number } }>
+> => {
+  return window.axios.get(route("chats.notification_group"));
+};
 export const fetchChatsInPaginate = (
   url: string,
 ): Promise<AxiosResponse<{ data: ChatPaginate }>> => {

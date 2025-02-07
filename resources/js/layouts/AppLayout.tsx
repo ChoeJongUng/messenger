@@ -7,12 +7,17 @@ export default function AppLayout({
   title,
   children,
 }: React.PropsWithChildren<{ title: string }>) {
-  const { notification_count } = usePage<PageProps>().props;
+  const { notification_count, notification_count_group } =
+    usePage<PageProps>().props;
 
   return (
     <AppProvider>
       <Head
-        title={clsx(notification_count > 0 && `(${notification_count})`, title)}
+        title={clsx(
+          notification_count + notification_count_group > 0 &&
+            `(${notification_count + notification_count_group})`,
+          title,
+        )}
       />
       <div className="relative">
         <div className="flex h-screen flex-col overflow-visible bg-background text-foreground sm:flex-row">

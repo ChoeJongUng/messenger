@@ -8,7 +8,7 @@ import ContentEmpty from "@/components/chats/ContentEmpty";
 
 export default function Contacts() {
   return (
-    <AppLayout title="대화 상대">
+    <AppLayout title="주변 회원">
       <ContactProvider>
         <ModalProvider>
           <SidebarMini />

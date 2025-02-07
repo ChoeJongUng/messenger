@@ -80,7 +80,6 @@ const Action = ({ contact }: ActionProps) => {
           type="button"
           className={clsx(
             "rounded-md border border-secondary bg-background p-1.5 shadow-sm group-hover:visible group-hover:flex",
-            open ? "visible" : "invisible",
           )}
         >
           <BsThreeDots className="text-secondary-foreground" />

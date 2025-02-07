@@ -1,18 +1,11 @@
-import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
 import DeleteUserForm from "./partials/DeleteUserForm";
-import TransferForm from "./partials/TransferForm";
-import UpdatePasswordForm from "./partials/UpdatePasswordForm";
-import UpdateProfileInformationForm from "./partials/UpdateProfileInformationForm";
 import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import AppLayout from "@/layouts/AppLayout";
 import SidebarMini from "@/layouts/partials/SidebarMini";
-import Sidebar from "@/components/contacts/Sidebar";
 import { AppProvider } from "@/contexts/app-context";
 import { useScreenSize } from "@/hooks/use-screen-size";
 import { Link } from "@inertiajs/react";
 import { BsBoxArrowRight } from "react-icons/bs";
-import { BsChevronRight } from "react-icons/bs";
 import PrimaryButton from "@/components/PrimaryButton";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
 export default function Account({

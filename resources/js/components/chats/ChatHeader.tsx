@@ -1,4 +1,5 @@
 import BadgeOnline from "@/components/chats/BadgeOnline";
+import { useAppContext } from "@/contexts/app-context";
 import { useChatMessageContext } from "@/contexts/chat-message-context";
 import { CHAT_TYPE } from "@/types/chat";
 import { Link } from "@inertiajs/react";
@@ -18,7 +19,7 @@ export default function ChatHeader({
 }: ChatHeaderProps) {
   const { user, toggleSidebarRight, showSidebarRight } =
     useChatMessageContext();
-
+  const { auth } = useAppContext();
   return (
     <div className="flex h-14 items-center justify-between border-b border-secondary p-2 shadow-sm">
       <div className="flex items-center gap-2">
@@ -43,7 +44,13 @@ export default function ChatHeader({
         </div>
 
         <div className="leading-4">
-          <h5 className="font-medium">{user.name}</h5>
+          <h5 className="font-medium">
+            {user.chat_type === CHAT_TYPE.CHATS
+              ? user.name
+              : auth.id === user.creator_id
+                ? "나"
+                : `${user.creator.name}`}
+          </h5>
           {user.chat_type === CHAT_TYPE.CHATS && (
             <span className="text-xs text-secondary-foreground">
               {user.is_online
@@ -56,32 +63,36 @@ export default function ChatHeader({
         </div>
       </div>
 
-      {onDrop ? (
-        <button
-          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
-          onClick={closeOnPreview}
-        >
-          <BsXLg />
-        </button>
-      ) : (
-        <button
-          className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
-          onClick={toggleSidebarRight}
-        >
-          {showSidebarRight ? (
-            <div
-              className={clsx(
-                "rounded-md p-0.5 text-sm text-white",
-                !user.message_color && "bg-primary",
-              )}
-              style={{ background: user.message_color }}
-            >
+      {user.chat_type === CHAT_TYPE.CHATS ? (
+        onDrop ? (
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
+            onClick={closeOnPreview}
+          >
+            <BsXLg />
+          </button>
+        ) : (
+          <button
+            className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-secondary focus:bg-secondary"
+            onClick={toggleSidebarRight}
+          >
+            {showSidebarRight ? (
+              <div
+                className={clsx(
+                  "rounded-md p-0.5 text-sm text-white",
+                  !user.message_color && "bg-primary",
+                )}
+                style={{ background: user.message_color }}
+              >
+                <BsThreeDots />
+              </div>
+            ) : (
               <BsThreeDots />
-            </div>
-          ) : (
-            <BsThreeDots />
-          )}
-        </button>
+            )}
+          </button>
+        )
+      ) : (
+        <></>
       )}
     </div>
   );

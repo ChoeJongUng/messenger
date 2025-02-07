@@ -1,13 +1,9 @@
 import { useRef, useState, FormEventHandler, useEffect } from "react";
 import DangerButton from "@/components/DangerButton";
-import InputError from "@/components/InputError";
-import InputLabel from "@/components/InputLabel";
 import Modal from "@/components/Modal";
 import SecondaryButton from "@/components/SecondaryButton";
-import TextInput from "@/components/TextInput";
 import { usePage, useForm, Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import Dropdown from "@/components/Dropdown";
 import { usePremium } from "@/hooks/use-premium";
 export default function PremiumForm({
   className = "",
@@ -89,7 +85,9 @@ export default function PremiumForm({
             <h2 className="text-lg font-medium text-foreground">확인</h2>
 
             <p className="mt-1 text-sm text-secondary-foreground">
-              정식회원기일을 30일 연장하시겠습니까?
+              {currentPremium == true
+                ? "정식회원기일을 30일 연장하시겠습니까?"
+                : "정식회원으로 등록하시겠습니까?"}
             </p>
           </header>
 

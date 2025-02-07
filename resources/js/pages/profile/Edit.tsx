@@ -1,13 +1,7 @@
-import AuthenticatedLayout from "@/layouts/AuthenticatedLayout";
-import DeleteUserForm from "./partials/DeleteUserForm";
-import TransferForm from "./partials/TransferForm";
-import UpdatePasswordForm from "./partials/UpdatePasswordForm";
 import ViewProfileInformationForm from "./partials/ViewProfileInformationForm";
 import { Head } from "@inertiajs/react";
 import { PageProps } from "@/types";
-import AppLayout from "@/layouts/AppLayout";
 import SidebarMini from "@/layouts/partials/SidebarMini";
-import Sidebar from "@/components/contacts/Sidebar";
 import { AppProvider } from "@/contexts/app-context";
 import { useScreenSize } from "@/hooks/use-screen-size";
 

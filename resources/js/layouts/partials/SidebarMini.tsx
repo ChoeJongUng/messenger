@@ -17,10 +17,10 @@ import {
 } from "react-icons/bs";
 
 export default function SidebarMini() {
-  const { auth, notificationCount } = useAppContext();
+  const { auth, notificationCount, notificationCountGroup } = useAppContext();
   const { openModal } = useModalContext();
   const { width } = useScreenSize();
-
+  console.log(notificationCount, notificationCountGroup);
   const openPreferences = () => {
     openModal({ view: "PREFERENCES", size: "lg" });
   };
@@ -28,7 +28,7 @@ export default function SidebarMini() {
   return (
     <div
       className={clsx(
-        "fixed bottom-[0] order-2 mt-auto w-[-webkit-fill-available] flex-row justify-between bg-background sm:order-1 sm:mt-0 sm:flex sm:flex-col sm:items-center sm:justify-center sm:p-2",
+        "fixed bottom-[0] order-2 mt-auto w-[-webkit-fill-available] flex-row justify-between bg-gray-200 sm:order-1 sm:mt-0 sm:flex sm:flex-col sm:items-center sm:justify-center sm:p-2",
         route().current("chats.show") ? "hidden" : "flex",
       )}
     >
@@ -70,6 +70,7 @@ export default function SidebarMini() {
         >
           거래제안
         </p>
+        {notificationCountGroup > 0 && <BadgeNotification />}
       </Link>
       <Link
         href={route("chats.index")}
@@ -139,7 +140,7 @@ export default function SidebarMini() {
                 : "/images/lp.png"
             }
             alt=""
-            className="m-auto h-8 w-8 rounded-md border border-secondary sm:h-10 sm:w-10"
+            className="m-auto h-8 w-8 rounded-md sm:h-10 sm:w-10"
           />
           <p
             className={
@@ -159,7 +160,7 @@ export default function SidebarMini() {
               <img
                 src="/images/lp.png"
                 alt=""
-                className="h-8 w-8 rounded-md border border-secondary sm:h-10 sm:w-10"
+                className="h-8 w-8 rounded-md sm:h-10 sm:w-10"
               />
             </Dropdown.Trigger>
 

@@ -19,10 +19,10 @@ type ChatListProps = {
 };
 
 export default function ChatList({ search, href, className }: ChatListProps) {
-  const { syncNotification } = useAppContext();
+  const { syncNotification, syncNotificationGroup } = useAppContext();
   const { chats, setChats, paginate, setPaginate } = useChatContext();
   const { ref: loadMoreRef, inView } = useInView();
-
+  console.log(chats);
   useEffect(() => {
     if (inView && loadMoreRef.length > 0) {
       if (paginate.next_page_url) {
@@ -37,6 +37,7 @@ export default function ChatList({ search, href, className }: ChatListProps) {
   const handleMarkAsRead = (chat: Chat) => {
     if (!chat.is_read) {
       markAsRead(chat).then(syncNotification);
+      markAsRead(chat).then(syncNotificationGroup);
     }
   };
 
@@ -121,8 +122,10 @@ export default function ChatList({ search, href, className }: ChatListProps) {
                     )}
                   </Link>
 
-                  {chat.body && <ChatListAction chat={chat} />}
-                  {!chat.is_read && <BadgeChatNotification />}
+                  {/* {chat.body && <ChatListAction chat={chat} />} */}
+                  {!chat.is_read && chat.chat_type == CHAT_TYPE.GROUP_CHATS && (
+                    <BadgeChatNotification />
+                  )}
                 </div>
               )
             );
@@ -189,7 +192,9 @@ export default function ChatList({ search, href, className }: ChatListProps) {
                   </Link>
 
                   {chat.body && <ChatListAction chat={chat} />}
-                  {!chat.is_read && <BadgeChatNotification />}
+                  {!chat.is_read && chat.chat_type == CHAT_TYPE.CHATS && (
+                    <BadgeChatNotification />
+                  )}
                 </div>
               )
             );

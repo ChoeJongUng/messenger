@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApkController;
 use App\Http\Controllers\EncryptionController;
 Route::get('/', [HomeController::class, 'index'])->middleware('guest');
-
 Route::middleware('auth')->group(function () {
     Route::group(['prefix' => 'profile', 'as' => 'profile.'], function () {
         Route::get('/', [ProfileController::class, 'edit'])->name('edit');
@@ -40,6 +39,7 @@ Route::middleware('auth')->group(function () {
         
         Route::get('/users', [ChatsController::class, 'loadChats'])->name('users');
         Route::get('/notification', [ChatsController::class, 'loadNotification'])->name('notification');
+        Route::get('/notification_group', [ChatsController::class, 'loadNotificationGroup'])->name('notification_group');
         Route::get('/{id}/messages', [ChatsController::class, 'loadMessages'])->name('messages');
         Route::get('/{id}/media', [ChatsController::class, 'loadMedia'])->name('media');
         Route::get('/{id}/files', [ChatsController::class, 'loadFiles'])->name('files');

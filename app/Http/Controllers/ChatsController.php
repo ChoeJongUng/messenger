@@ -96,7 +96,16 @@ class ChatsController extends Controller
             return $this->oops($e->getMessage());
         }
     }
+    public function loadNotificationGroup() 
+    {
+        try {
+            $notificationCount = $this->notificationCountGroup();
 
+            return $this->ok(['notification_count_group' => $notificationCount]);
+        } catch (\Exception $e) {
+            return $this->oops($e->getMessage());
+        }
+    }
     public function loadMessages(string $id) 
     {
         try {

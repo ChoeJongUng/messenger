@@ -37,7 +37,7 @@ export default function ChatListAction({ chat }: ActionProps) {
 }
 
 const Action = ({ chat }: ActionProps) => {
-  const { auth, syncNotification } = useAppContext();
+  const { auth, syncNotification, syncNotificationGroup } = useAppContext();
   const { chats, setChats, refetchChats } = useChatContext();
   const { user, setUser } = useChatMessageContext();
   const { openModal } = useModalContext();
@@ -61,6 +61,7 @@ const Action = ({ chat }: ActionProps) => {
       );
 
       syncNotification();
+      syncNotificationGroup();
     });
   };
 
@@ -77,6 +78,7 @@ const Action = ({ chat }: ActionProps) => {
       );
 
       syncNotification();
+      syncNotificationGroup();
     });
   };
 
@@ -143,7 +145,6 @@ const Action = ({ chat }: ActionProps) => {
           type="button"
           className={clsx(
             "rounded-md border border-secondary bg-background p-1.5 shadow-sm group-hover:visible group-hover:flex",
-            open ? "visible" : "invisible",
           )}
         >
           <BsThreeDots className="text-secondary-foreground" />

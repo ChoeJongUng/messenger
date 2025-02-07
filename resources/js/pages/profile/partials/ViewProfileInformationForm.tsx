@@ -1,16 +1,9 @@
-import InputError from "@/components/InputError";
-import InputLabel from "@/components/InputLabel";
 import PrimaryButton from "@/components/PrimaryButton";
-import DangerButton from "@/components/DangerButton";
 
-import TextInput from "@/components/TextInput";
 import { Link, useForm, usePage } from "@inertiajs/react";
-import { Transition } from "@headlessui/react";
 import { ChangeEvent, FormEventHandler, useRef } from "react";
 import { PageProps } from "@/types";
-import { BsCamera } from "react-icons/bs";
 import { UpdateProfileSchema } from "@/types/user";
-import Dropdown from "@/components/Dropdown";
 import { usePremium } from "@/hooks/use-premium";
 import {
   UserCircleIcon,
@@ -80,18 +73,32 @@ export default function ViewProfileInformation({
     <section className={className}>
       <form onSubmit={submit} className="mt-6 space-y-6">
         <div className="rounded-md p-4 shadow">
-          <div className="picture relative">
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className="mx-auto h-20 w-20 rounded-md border border-secondary"
-              ref={avatarRef}
-            />
-            <p className="mx-auto mt-2 text-center text-lg">
-              <b>{user.name}</b>
-            </p>
+          <div className="picture relative mb-4">
+            <div className="flex w-fit">
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className="mx-auto inline h-20 w-20 rounded-md border border-secondary"
+                ref={avatarRef}
+              />
+              <span className="ml-2 mt-0 text-lg">
+                <p>
+                  <b>{user.name}</b>
+                </p>
+                <p>
+                  <span className="text-sm">전화번호:</span>&nbsp;{user.phone}
+                </p>
+                {user.country && (
+                  <img
+                    className="inline h-4 w-6"
+                    src={`/images/${user.country}.png`}
+                    alt="국기"
+                  />
+                )}
+              </span>
+            </div>
           </div>
-          <div className="space-between inline">
+          <div className="space-between mt-4 inline">
             <p className="inline text-sm">보유금액: ${user.balance}</p>
             <p className="float-right inline text-sm">
               {currentPremium == true

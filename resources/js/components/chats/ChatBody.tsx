@@ -79,12 +79,9 @@ export default function ChatBody({
           <div>
             {user.chat_type === CHAT_TYPE.GROUP_CHATS ? (
               <>
-                <h5 className="mt-1 text-lg font-medium">
-                  {auth.id === user.creator_id
-                    ? "나:"
-                    : `${user.creator.name} `}
+                <p className="mx-auto max-w-[80vw] break-words text-center">
                   {user.name}
-                </h5>
+                </p>
                 <p className="text-sm text-secondary-foreground">
                   <p>신뢰할수 있다.</p>
 
@@ -92,7 +89,7 @@ export default function ChatBody({
                   {"일 "}
                   {moment(user.created_at).format("H:mm")}
                   <br />
-                  <p className="max-w-[90vw] break-words p-4">
+                  <p className="max-w-[90vw] break-words p-4 text-left">
                     {user.description}
                   </p>
                 </p>

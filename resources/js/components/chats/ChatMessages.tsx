@@ -58,26 +58,23 @@ export default function ChatMessages() {
                 <div className="text-sm text-foreground">
                   {message.body && (
                     <div className="group relative flex items-center gap-2">
-                      <div>
-                        {showProfile && (
+                      <div className="flex">
+                        {true && (
                           <div className="mb-1 mt-2 flex items-center gap-2">
                             <img
                               src={message.from.avatar}
                               alt={message.from.name}
-                              className="h-6 w-6 rounded-md border border-secondary"
+                              className="h-8 w-8 rounded-md border border-secondary"
                             />
-                            <p className="text-sm font-medium">
-                              {message.from.name}
-                            </p>
                           </div>
                         )}
 
-                        <div className="relative flex max-w-xs flex-wrap items-end gap-2 rounded-2xl bg-secondary py-2 pl-2 pr-4 text-sm lg:max-w-md">
+                        <div className="relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm bg-[#07c160] py-2 pl-2 pr-4 text-sm lg:max-w-md">
                           <p
                             dangerouslySetInnerHTML={{ __html: message.body }}
-                            className="my-auto overflow-auto"
+                            className="my-auto max-w-[70vw] overflow-auto break-words text-[black]"
                           />
-                          <span className="-mt-4 ml-auto text-xs text-secondary-foreground">
+                          <span className="-mt-4 ml-auto text-xs text-white">
                             {date.format("H:mm")}
                           </span>
                         </div>
@@ -103,28 +100,37 @@ export default function ChatMessages() {
               <div className="flex flex-row justify-end">
                 <div className="text-sm text-white">
                   {message.body && (
-                    <div className="group relative flex flex-row-reverse items-center gap-2">
-                      <div
-                        className={clsx(
-                          "relative flex max-w-xs flex-wrap items-end gap-2 rounded-2xl py-2 pl-4 pr-2 lg:max-w-md",
-                          !user.message_color && "bg-primary",
-                        )}
-                        style={{
-                          background: user.message_color
-                            ? user.message_color
-                            : "",
-                        }}
-                      >
-                        <p
-                          dangerouslySetInnerHTML={{ __html: message.body }}
-                          className="my-auto overflow-auto"
-                        />
-                        <span className="-mt-4 ml-auto text-xs text-white/80">
-                          {date.format("H:mm")}
-                        </span>
-                      </div>
+                    <div className="group relative flex items-center gap-2">
+                      <div className="flex items-start">
+                        <DeleteMessage message={message} />
 
-                      <DeleteMessage message={message} />
+                        <div
+                          className={clsx(
+                            "relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm py-2 pl-4 pr-2 lg:max-w-md",
+                            !user.message_color && "bg-[#07c160]",
+                          )}
+                          style={{
+                            background: user.message_color
+                              ? user.message_color
+                              : "",
+                          }}
+                        >
+                          <p
+                            dangerouslySetInnerHTML={{ __html: message.body }}
+                            className="my-auto max-w-[70vw] overflow-auto break-words text-[black]"
+                          />
+                          <span className="-mt-4 ml-auto text-xs">
+                            {date.format("H:mm")}
+                          </span>
+                        </div>
+                      </div>
+                      <div className=" flex items-end gap-2">
+                        <img
+                          src={auth.avatar}
+                          alt={auth.name}
+                          className="h-8 w-8 rounded-md border border-secondary"
+                        />
+                      </div>
                     </div>
                   )}
 

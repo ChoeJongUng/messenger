@@ -18,7 +18,7 @@ export default function Sidebar() {
       )}
     >
       <div className="flex items-center justify-between px-2 pt-2 sm:pb-0">
-        <h3 className="text-2xl font-semibold">대화 상대</h3>
+        <h3 className="text-2xl font-semibold">주변 회원</h3>
         <p>
           활성 연락처 (
           {contacts?.filter((contact) => contact.is_online === true).length})

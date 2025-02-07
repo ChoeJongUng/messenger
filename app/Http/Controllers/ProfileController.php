@@ -102,14 +102,15 @@ class ProfileController extends Controller
                 $date2 = new \DateTime($now);
 
                 // Calculate the difference
-                $diff = $date1->diff($date2);
+                $diff = $date1->diff($date2)->days;
+                if($diff>=0) $is_premium = true;
             }
         }
 
-        if($diff->days>=0) $is_premium = true;
+        
         return response()->json([
             'is_premium'=>$is_premium,
-            'diff'=>$diff->days
+            'diff'=>$diff
         ]);
 
     }
@@ -161,10 +162,10 @@ class ProfileController extends Controller
                 $date2 = new \DateTime($now);
 
                 // Calculate the difference
-                $diff = $date1->diff($date2);
+                $diff = $date1->diff($date2)->days;
             }
         }
-        if($diff->days>=0) $is_premium = true;
+        if($diff>=0) $is_premium = true;
         $balance = $user->balance-1000;
 
         if($is_premium==false){
