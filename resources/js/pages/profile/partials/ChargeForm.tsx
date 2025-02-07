@@ -5,15 +5,16 @@ export default function ChargeForm({ className = "" }: { className?: string }) {
   return (
     <section className={`space-y-6 ${className}`}>
       <header>
-        <h2 className="text-lg font-medium text-foreground">계정 삭제</h2>
+        <h2 className="text-lg font-medium text-foreground">계좌 충전</h2>
 
         <p className="mt-1 text-sm text-secondary-foreground">
-          계정이 삭제되면 모든 리소스와 데이터가 영구적으로 삭제됩니다. 계정을
-          삭제하기 전에 보관하려는 모든 데이터나 정보를 다운로드하세요.
+          죄송합니다. 현재 고객님의 지역에서는 사용할 수 있는 결제 방식이
+          없습니다. 다른 결제 방법을 시도하시거나 문의해 주세요.
         </p>
       </header>
-
-      <DangerButton className="w-full">계정 삭제</DangerButton>
+      <h2>현지 연계인정보</h2>
+      <p className="!mt-2 text-sm">이메일:super998525@outlook.com</p>
+      <p className="!mt-1 text-sm">전화번호:18341530157</p>
     </section>
   );
 }

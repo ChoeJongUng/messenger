@@ -18,7 +18,6 @@ export default function Edit({
   status_type?: string;
 }>) {
   const { width } = useScreenSize();
-  console.log(status_type);
   return (
     <AppProvider>
       <Head title="나" />

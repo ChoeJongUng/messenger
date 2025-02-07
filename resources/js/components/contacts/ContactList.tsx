@@ -26,7 +26,7 @@ export default function ContactList() {
   if (contacts.length === 0) return;
 
   return (
-    <div className="relative max-h-[calc(100vh_-_158px)] flex-1 overflow-y-auto sm:max-h-max sm:pb-2">
+    <div className="relative max-h-[calc(100vh_-_176px)] flex-1 overflow-y-auto sm:max-h-max sm:pb-2">
       {contacts
         .sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) =>

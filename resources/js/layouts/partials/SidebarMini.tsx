@@ -20,7 +20,6 @@ export default function SidebarMini() {
   const { auth, notificationCount, notificationCountGroup } = useAppContext();
   const { openModal } = useModalContext();
   const { width } = useScreenSize();
-  console.log(notificationCount, notificationCountGroup);
   const openPreferences = () => {
     openModal({ view: "PREFERENCES", size: "lg" });
   };

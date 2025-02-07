@@ -27,7 +27,6 @@ export default function ChatBody({
     useChatMessageContext();
 
   const { ref: loadMoreRef, inView } = useInView();
-  console.log(user);
   useEffect(() => {
     const inViewObserver = setTimeout(() => {
       if (inView && loadMoreRef.length > 0) {

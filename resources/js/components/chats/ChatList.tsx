@@ -22,7 +22,6 @@ export default function ChatList({ search, href, className }: ChatListProps) {
   const { syncNotification, syncNotificationGroup } = useAppContext();
   const { chats, setChats, paginate, setPaginate } = useChatContext();
   const { ref: loadMoreRef, inView } = useInView();
-  console.log(chats);
   useEffect(() => {
     if (inView && loadMoreRef.length > 0) {
       if (paginate.next_page_url) {

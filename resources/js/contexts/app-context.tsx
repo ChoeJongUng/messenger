@@ -184,8 +184,6 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: "SET_NOTIFICATION_COUNT_GROUP", payload: value });
 
   const syncNotification = async () => {
-    console.log("callde");
-
     const lastSync = localStorage.getItem("last-sync-notification");
     const currentTime = moment();
 
@@ -201,7 +199,6 @@ export const AppProvider = ({ children }: PropsWithChildren) => {
     });
   };
   const syncNotificationGroup = async () => {
-    console.log("callde");
     const lastSync = localStorage.getItem("last-sync-notification-group");
     const currentTime = moment();
 
