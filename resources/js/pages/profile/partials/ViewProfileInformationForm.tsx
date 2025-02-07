@@ -90,7 +90,7 @@ export default function ViewProfileInformation({
                 </p>
                 {user.country && (
                   <img
-                    className="inline h-4 w-6"
+                    className="inline h-4 w-6 border"
                     src={`/images/${user.country}.png`}
                     alt="국기"
                   />

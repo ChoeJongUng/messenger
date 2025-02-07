@@ -63,7 +63,7 @@ export default function ContactList() {
                 <span className="text-sm text-gray-500">
                   {contact.country && (
                     <img
-                      className="inline h-5 w-7"
+                      className="inline h-5 w-7 border"
                       src={`/images/${contact.country}.png`}
                       alt="국기"
                     />

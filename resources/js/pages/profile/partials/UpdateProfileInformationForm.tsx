@@ -137,6 +137,10 @@ export default function UpdateProfileInformation({
                 className="hidden"
               />
             </label>
+            <InputError
+              className="mx-auto mt-2 text-center"
+              message={errors.avatar}
+            />
           </div>
           {/* <div>
           <InputLabel htmlFor="balance" value="포인트잔액" />

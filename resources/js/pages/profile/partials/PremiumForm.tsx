@@ -5,6 +5,7 @@ import SecondaryButton from "@/components/SecondaryButton";
 import { usePage, useForm, Link } from "@inertiajs/react";
 import { PageProps } from "@/types";
 import { usePremium } from "@/hooks/use-premium";
+import PrimaryButton from "@/components/PrimaryButton";
 export default function PremiumForm({
   className = "",
   friends,
@@ -23,6 +24,7 @@ export default function PremiumForm({
   });
   const [etarget, setEtarget] = useState(false);
   const [ebalance, setEbalance] = useState(false);
+  const [eprofile, setEprofile] = useState(false);
   const [eamount, setEamount] = useState(false);
   const confirmUserDeletion = () => {
     setConfirmingUserDeletion(true);
@@ -38,6 +40,11 @@ export default function PremiumForm({
   const transfer = () => {
     if (user.balance < 1000) {
       setEbalance(true);
+      closeModal();
+      return;
+    }
+    if (!user.gender || !user.age || !user.country) {
+      setEprofile(true);
       closeModal();
       return;
     }
@@ -59,6 +66,18 @@ export default function PremiumForm({
             : "임시회원"}
         </p>
         <p>보유금액: ${data.balance}</p>
+        {eprofile && (
+          <>
+            <p className="text-[12px] text-[red]">
+              정식회원등록을 하시려면 개인정보를 모두 입력하여야 합니다.
+            </p>
+            <Link href={route("profile.personal")}>
+              <PrimaryButton className="w-full bg-[#07c160]">
+                개인정보
+              </PrimaryButton>
+            </Link>
+          </>
+        )}
         {ebalance && (
           <>
             <p className="text-[12px] text-[red]">

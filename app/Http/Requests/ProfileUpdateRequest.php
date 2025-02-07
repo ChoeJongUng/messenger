@@ -16,16 +16,17 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'avatar' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], 
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'lowercase', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'gender'=> ['string', 'max:255',"nullable"],
-            'age'=> ['integer',"nullable"],
-            'country'=> ['string', 'max:255',"nullable"],
-            'city'=> ['string', 'max:255',"nullable"],
-            'company'=> ['string', 'max:255',"nullable"],
-            'job'=> ['string', 'max:255',"nullable"],
-            'category'=> ['string', 'max:255',"nullable"],
-            'capability'=>['string', 'max:255',"nullable"],
+            'gender'=> ['required','string', 'max:255',],
+            'age'=> ['required','integer',],
+            'country'=> ['required','string', 'max:255',],
+            'city'=> ['required','string', 'max:255',],
+            'company'=> ['required','string', 'max:255',],
+            'job'=> ['required','string', 'max:255',],
+            'category'=> ['required','string', 'max:255',],
+            'capability'=>['required','string', 'max:255',],
         ];
     }
 }
