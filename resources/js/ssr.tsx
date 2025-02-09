@@ -5,7 +5,7 @@ import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { route } from "../../vendor/tightenco/ziggy";
 import { RouteName, ParameterValue } from "ziggy-js";
 
-const appName = import.meta.env.VITE_APP_NAME || "Laravel";
+const appName = "TradeLink";
 
 createServer((page) =>
   createInertiaApp({

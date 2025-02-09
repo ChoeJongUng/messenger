@@ -27,9 +27,15 @@ export default function ChatBody({
   const { user, messages, setMessages, paginate, setPaginate, isTyping } =
     useChatMessageContext();
   const [credit, setCredit] = useState(0);
-  axios.get("/get_credit").then(function (response) {
-    setCredit(Number(response.data.credit));
-  });
+  useEffect(() => {
+    let user_id = "";
+    if (user.creator_id) user_id = user.creator_id;
+    else user_id = user.id;
+    axios.get("/get_credit?user=" + user_id).then(function (response) {
+      setCredit(Number(response.data.credit));
+    });
+  }, [user]);
+
   const { ref: loadMoreRef, inView } = useInView();
   useEffect(() => {
     const inViewObserver = setTimeout(() => {

@@ -115,7 +115,8 @@ class ProfileController extends Controller
 
     }
     public function get_credit(Request $request){
-        $balance = auth()->user()->balance;
+        $user = User::where('id',$request->input('user'))->first();
+        $balance = $user->balance;
         
         return response()->json([
             'credit'=>$balance,

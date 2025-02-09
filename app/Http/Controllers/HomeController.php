@@ -16,7 +16,7 @@ class HomeController extends Controller
         }
         return Inertia::render('welcome/Index', [
             'canResetPassword' => Route::has('password.request'),
-            'appName' => config('app.name')
+            'appName' => "TradeLink"
         ]);
     }
 }
