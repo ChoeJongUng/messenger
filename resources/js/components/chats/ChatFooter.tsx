@@ -11,6 +11,11 @@ import { Preview } from "./Content";
 import { unblockContact } from "@/api/contacts";
 import { existingFiles, existingLinks, existingMedia } from "@/utils";
 import { PresenceChannel } from "laravel-echo";
+import { usePremium } from "@/hooks/use-premium";
+import Modal from "@/components/Modal";
+import SecondaryButton from "../SecondaryButton";
+import { Link } from "@inertiajs/react";
+import PrimaryButton from "../PrimaryButton";
 
 type ChatFooterProps = {
   scrollToBottom: () => void;
@@ -25,6 +30,13 @@ export default function ChatFooter({
   closeOnPreview,
   onSelectOrPreviewFiles,
 }: ChatFooterProps) {
+  const { currentPremium, remainedDays } = usePremium();
+
+  const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+
+  const closeModal = () => {
+    setConfirmingUserDeletion(false);
+  };
   const { theme, auth } = useAppContext();
   const { chats, setChats, refetchChats } = useChatContext();
   const {
@@ -82,6 +94,11 @@ export default function ChatFooter({
 
     if (onPressEnter && !e.shiftKey) {
       e.preventDefault();
+      if (!currentPremium) {
+        setConfirmingUserDeletion(true);
+        return;
+      }
+
       handleOnSubmit(e as unknown as React.FormEvent<HTMLFormElement>);
     }
 
@@ -110,6 +127,11 @@ export default function ChatFooter({
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!currentPremium) {
+      setConfirmingUserDeletion(true);
+      return;
+    }
 
     if ((message.length === 0 && attachments.length === 0) || processing) {
       return;
@@ -180,73 +202,108 @@ export default function ChatFooter({
   }
 
   return (
-    <form
-      className="flex items-end gap-2 bg-background p-2 text-foreground"
-      onSubmit={handleOnSubmit}
-    >
-      <label
-        htmlFor="file"
-        className="mb-1 cursor-pointer rounded-md p-2 text-primary transition-all hover:bg-secondary focus:bg-secondary"
+    <div>
+      <form
+        className="flex items-end gap-2 bg-background p-2 text-foreground"
+        onSubmit={handleOnSubmit}
       >
-        <BsPlusLg className="h-6 w-6 text-[#07c160]" />
-        <input
-          type="file"
-          className="hidden"
-          id="file"
-          multiple
-          onChange={onSelectFile}
-        />
-      </label>
-
-      <div className="relative flex flex-1 items-end">
-        <button
-          type="button"
-          className="absolute right-2 mb-3 text-primary"
-          onClick={toggleEmoji}
+        <label
+          htmlFor="file"
+          className="mb-1 cursor-pointer rounded-md p-2 text-primary transition-all hover:bg-secondary focus:bg-secondary"
         >
-          <BsEmojiSmile className="h-6 w-6 text-[#07c160]" />
-        </button>
+          <BsPlusLg className="h-6 w-6 text-[#07c160]" />
+          <input
+            type="file"
+            className="hidden"
+            id="file"
+            multiple
+            onChange={onSelectFile}
+          />
+        </label>
 
-        <div
-          className={clsx(
-            "absolute bottom-14 right-0 z-10",
-            isOpenEmoji ? "block" : "hidden",
-          )}
-        >
-          <EmojiPicker
-            theme={(theme === "system" ? "auto" : theme) as Theme}
-            skinTonesDisabled={true}
-            height={400}
-            onEmojiClick={({ emoji }) => handleOnEmojiClick(emoji)}
-          ></EmojiPicker>
+        <div className="relative flex flex-1 items-end">
+          <button
+            type="button"
+            className="absolute right-2 mb-3 text-primary"
+            onClick={toggleEmoji}
+          >
+            <BsEmojiSmile className="h-6 w-6 text-[#07c160]" />
+          </button>
+
+          <div
+            className={clsx(
+              "absolute bottom-14 right-0 z-10",
+              isOpenEmoji ? "block" : "hidden",
+            )}
+          >
+            <EmojiPicker
+              theme={(theme === "system" ? "auto" : theme) as Theme}
+              skinTonesDisabled={true}
+              height={400}
+              onEmojiClick={({ emoji }) => handleOnEmojiClick(emoji)}
+            ></EmojiPicker>
+          </div>
+
+          <textarea
+            placeholder=""
+            className="max-h-[7.5rem] w-full resize-none rounded-xl border border-secondary bg-secondary pr-10 text-foreground focus:border-transparent focus:ring-transparent"
+            value={message}
+            onKeyDown={handleOnKeyDown}
+            onChange={handleOnChange}
+            ref={textareaRef}
+            style={{
+              height: `${textareaHeight}px`,
+            }}
+          />
         </div>
 
-        <textarea
-          placeholder=""
-          className="max-h-[7.5rem] w-full resize-none rounded-xl border border-secondary bg-secondary pr-10 text-foreground focus:border-transparent focus:ring-transparent"
-          value={message}
-          onKeyDown={handleOnKeyDown}
-          onChange={handleOnChange}
-          ref={textareaRef}
-          style={{
-            height: `${textareaHeight}px`,
-          }}
-        />
-      </div>
+        <button
+          className={clsx(
+            "mb-1 flex rounded-md p-2 text-primary transition-all disabled:cursor-not-allowed",
+            message.trim().length === 0 &&
+              "hover:bg-secondary focus:bg-secondary",
+            message.trim().length > 0 &&
+              !processing &&
+              "bg-[#07c160] !text-white",
+          )}
+          disabled={processing}
+        >
+          <BiSend
+            className={clsx(
+              "h-6 w-6 ",
+              message.trim().length === 0 && "text-[#07c160]",
+              message.trim().length > 0 && "text-white",
+            )}
+          />
+        </button>
+      </form>
+      <Modal show={confirmingUserDeletion} onClose={closeModal}>
+        <div className="p-6">
+          <header>
+            <h2 className="text-lg font-medium text-foreground">
+              정식회원으로 등록하시겠습니까?
+            </h2>
 
-      <button
-        className={clsx(
-          "mb-1 flex rounded-md p-2 text-primary transition-all disabled:cursor-not-allowed",
-          message.trim().length === 0 &&
-            "hover:bg-secondary focus:bg-secondary",
-          message.trim().length > 0 &&
-            !processing &&
-            "bg-[#07c160] !text-white",
-        )}
-        disabled={processing}
-      >
-        <BiSend className="h-6 w-6 text-[#07c160]" />
-      </button>
-    </form>
+            <p className="mt-1 text-sm text-secondary-foreground">
+              고객님은 현재 임시회원입니다.
+              <br />
+              임시회원은 메시지전송, 메시지수신이 불가합니다. 정식회원으로
+              등록하여 많은 파트너들을 만나보세요.
+            </p>
+          </header>
+
+          <div className="mt-6 flex justify-end">
+            <SecondaryButton onClick={closeModal}>취소</SecondaryButton>
+            <div>
+              <Link href={route("profile.premium")}>
+                <PrimaryButton className="ms-3 bg-[#07c160]">
+                  정식회원 등록
+                </PrimaryButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
   );
 }

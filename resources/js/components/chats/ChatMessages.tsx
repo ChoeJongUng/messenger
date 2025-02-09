@@ -26,14 +26,23 @@ export default function ChatMessages() {
       return true;
     })
     .filter((message) => message.body || message.attachments?.length > 0);
-  const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
 
   const closeModal = () => {
     setConfirmingUserDeletion(false);
   };
+
+  const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+  const [hasFetchedPremium, setHasFetchedPremium] = useState(false);
+
   useEffect(() => {
-    setConfirmingUserDeletion(!currentPremium);
-  }, [currentPremium]);
+    if (!hasFetchedPremium && currentPremium !== undefined) {
+      setHasFetchedPremium(true);
+    }
+
+    if (hasFetchedPremium) {
+      setConfirmingUserDeletion(!currentPremium);
+    }
+  }, [currentPremium, hasFetchedPremium]);
   return (
     <div className="relative flex flex-1 flex-col gap-[3px] overflow-x-hidden">
       {sortedAndFilteredMessages.map((message, index) => {
