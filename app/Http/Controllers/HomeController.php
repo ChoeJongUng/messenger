@@ -10,10 +10,10 @@ class HomeController extends Controller
 {
     public function index() 
     {
-            if (auth()->guest()) {
-            // Redirect to the register page
-            return redirect()->route('register');
-        }
+        // if (auth()->guest()) {
+        //     // Redirect to the register page
+        //     return redirect()->route('chats.index');
+        // }
         return Inertia::render('welcome/Index', [
             'canResetPassword' => Route::has('password.request'),
             'appName' => "TradeLink"
