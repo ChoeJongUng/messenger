@@ -36,7 +36,6 @@ export default function ChatFooter({
     reloadFiles,
     reloadLinks,
   } = useChatMessageContext();
-  console.log(messages);
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState(48);
   const [processing, setProcessing] = useState(false);

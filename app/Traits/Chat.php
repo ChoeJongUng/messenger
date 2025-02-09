@@ -19,52 +19,6 @@ trait Chat
 
     public function chats() 
     {
-        // // $group = GroupMember::where('member_id', auth()->id())
-        // //     ->select('member_id', 'group_id')
-        // //     ->groupBy('member_id', 'group_id');
-        // $group = ChatGroup::select('id as group_id'); 
-        // if (request()->filled('query')) {
-        //     // $chatGroup = ChatGroup::joinSub($group, 'g', function (JoinClause $join) {
-        //     //         $join->on('chat_groups.id', 'g.group_id');
-        //     //     })
-        //     //     ->where('name', 'LIKE', '%'. request('query') .'%')
-        //     //     ->select('id', 'name', 'avatar', 'member_id','description');
-      
-        //     $chatGroup = ChatGroup::where('name', 'LIKE', '%' . request('query') . '%')
-        //         ->select('id', 'name', 'avatar', 'description')
-        //         ->addSelect(\DB::raw(auth()->id() . ' as member_id'))  // Add the current member ID for context
-        //         ;
-        //     $contacts = ChatContact::where('user_id', auth()->id())
-        //         ->select('contact_id', 'is_contact_blocked')
-        //         ->groupBy('contact_id', 'is_contact_blocked');
-
-        //     $chats = User::leftJoinSub($chatGroup, 'cg', function (JoinClause $join) {
-        //             $join->on('cg.member_id', 'users.id')  ;
-        //         })
-        //         ->leftJoinSub($contacts, 'c', function (JoinClause $join) {
-        //             $join->on('c.contact_id', 'users.id');
-        //         })
-        //         ->where('users.name', 'LIKE', '%'. request('query') .'%')
-        //         ->orWhere('cg.name', 'LIKE', '%'. request('query') .'%')
-        //         ->selectRaw('
-        //             IFNULL (cg.id, users.id) as id,
-        //             IFNULL (cg.name, users.name) as name,
-        //             IFNULL (cg.avatar, users.avatar) as avatar,
-        //             NULL as message_id,
-        //             NULL as body,
-        //             1 as is_read,
-        //             0 as is_reply,
-        //             IF (cg.id IS NULL AND users.is_online = 1 AND users.active_status = 1, 1, 0) as is_online,
-        //             IF (cg.id IS NULL, active_status, 0) as active_status,
-        //             c.is_contact_blocked,
-        //             NULL as created_at,
-        //             ? as chat_type
-        //         ', 
-        //         [ChatMessage::CHAT_TYPE])
-        //         ->paginate(15)
-        //         ->withQueryString()
-        //         ->setPath(route('chats.users'));
-        // } 
         $group = ChatGroup::select('id as group_id');
 
         if (request()->filled('query')) {
@@ -327,7 +281,6 @@ trait Chat
 
             $chats[$key] = $chat;
         }
-            
         return $chats;
     }
 

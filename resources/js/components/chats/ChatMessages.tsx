@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import DeleteMessage from "@/components/chats/DeleteMessage";
 import { useChatMessageContext } from "@/contexts/chat-message-context";
 import { CHAT_TYPE } from "@/types/chat";
@@ -7,11 +7,15 @@ import { useAppContext } from "@/contexts/app-context";
 import { isImageLinkValid } from "@/utils";
 import ChatMessageAttachment from "@/components/chats/ChatMessageAttachment";
 import clsx from "clsx";
-
+import { usePremium } from "@/hooks/use-premium";
+import Modal from "@/components/Modal";
+import SecondaryButton from "../SecondaryButton";
+import PrimaryButton from "../PrimaryButton";
+import { Link } from "@inertiajs/react";
 export default function ChatMessages() {
   const { auth } = useAppContext();
   const { messages, paginate, user } = useChatMessageContext();
-
+  const { currentPremium, remainedDays } = usePremium();
   const sortedAndFilteredMessages = messages
     .sort((a, b) => a.sort_id - b.sort_id)
     .filter((message, index) => {
@@ -22,7 +26,14 @@ export default function ChatMessages() {
       return true;
     })
     .filter((message) => message.body || message.attachments?.length > 0);
+  const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
 
+  const closeModal = () => {
+    setConfirmingUserDeletion(false);
+  };
+  useEffect(() => {
+    setConfirmingUserDeletion(!currentPremium);
+  }, [currentPremium]);
   return (
     <div className="relative flex flex-1 flex-col gap-[3px] overflow-x-hidden">
       {sortedAndFilteredMessages.map((message, index) => {
@@ -57,22 +68,32 @@ export default function ChatMessages() {
               <div className="flex flex-row justify-start">
                 <div className="text-sm text-foreground">
                   {message.body && (
-                    <div className="group relative flex items-center gap-2">
+                    <div className="group relative my-1 flex items-center gap-2">
                       <div className="flex">
                         {true && (
-                          <div className="mb-1 mt-2 flex items-center gap-2">
+                          <div className=" flex items-center gap-2">
                             <img
                               src={message.from.avatar}
                               alt={message.from.name}
-                              className="h-8 w-8 rounded-md border border-secondary"
+                              className="h-7 w-7 rounded-md border border-secondary"
                             />
                           </div>
                         )}
 
-                        <div className="relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm bg-[#07c160] py-2 pl-2 pr-4 text-sm lg:max-w-md">
+                        <div
+                          className="relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm bg-[#07c160] py-1 pl-2 pr-4 text-sm lg:max-w-md"
+                          style={{
+                            filter: currentPremium ? "none" : "blur(5px)",
+                          }}
+                        >
                           <p
-                            dangerouslySetInnerHTML={{ __html: message.body }}
-                            className="my-auto max-w-[70vw] overflow-auto break-words text-[black]"
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                currentPremium == true
+                                  ? message.body
+                                  : "&nbsp;",
+                            }}
+                            className="my-auto min-w-[30vw] max-w-[70vw] overflow-auto break-words text-[black]"
                           />
                           <span className="-mt-4 ml-auto text-xs text-white">
                             {date.format("H:mm")}
@@ -100,24 +121,30 @@ export default function ChatMessages() {
               <div className="flex flex-row justify-end">
                 <div className="text-sm text-white">
                   {message.body && (
-                    <div className="group relative flex items-center gap-2">
+                    <div className="group relative my-1 flex items-center gap-2">
                       <div className="flex items-start">
                         <DeleteMessage message={message} />
 
                         <div
                           className={clsx(
-                            "relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm py-2 pl-4 pr-2 lg:max-w-md",
+                            "relative flex max-w-xs flex-wrap items-end gap-2 rounded-sm py-1 pl-4 pr-2 lg:max-w-md",
                             !user.message_color && "bg-[#07c160]",
                           )}
                           style={{
                             background: user.message_color
                               ? user.message_color
                               : "",
+                            filter: currentPremium ? "none" : "blur(5px)",
                           }}
                         >
                           <p
-                            dangerouslySetInnerHTML={{ __html: message.body }}
-                            className="my-auto max-w-[70vw] overflow-auto break-words text-[black]"
+                            dangerouslySetInnerHTML={{
+                              __html:
+                                currentPremium == true
+                                  ? message.body
+                                  : "&nbsp;",
+                            }}
+                            className="my-auto min-w-[30vw] max-w-[70vw] overflow-auto break-words text-[black]"
                           />
                           <span className="-mt-4 ml-auto text-xs">
                             {date.format("H:mm")}
@@ -128,7 +155,7 @@ export default function ChatMessages() {
                         <img
                           src={auth.avatar}
                           alt={auth.name}
-                          className="h-8 w-8 rounded-md border border-secondary"
+                          className="h-7 w-7 rounded-md border border-secondary"
                         />
                       </div>
                     </div>
@@ -153,6 +180,33 @@ export default function ChatMessages() {
           </Fragment>
         );
       })}
+      <Modal show={confirmingUserDeletion} onClose={closeModal}>
+        <div className="p-6">
+          <header>
+            <h2 className="text-lg font-medium text-foreground">
+              정식회원으로 등록하시겠습니까?
+            </h2>
+
+            <p className="mt-1 text-sm text-secondary-foreground">
+              고객님은 현재 임시회원입니다.
+              <br />
+              임시회원은 메시지전송, 메시지수신이 불가합니다. 정식회원으로
+              등록하여 많은 파트너들을 만나보세요.
+            </p>
+          </header>
+
+          <div className="mt-6 flex justify-end">
+            <SecondaryButton onClick={closeModal}>취소</SecondaryButton>
+            <div>
+              <Link href={route("profile.premium")}>
+                <PrimaryButton className="ms-3 bg-[#07c160]">
+                  정식회원 등록
+                </PrimaryButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

@@ -59,11 +59,10 @@ class ChatsController extends Controller
             }
 
             $user->message_color = auth()->user()->message_color($id);
-
             return Inertia::render('chats/Show', [
                 'user' => fn () => $user,
                 'chats' => fn () => $this->chats(),
-                'messages' => fn () => $this->messages($id),
+                'messages' => fn () => $this->messages($id),    
                 'media' => fn () => $this->media($id),
                 'files' => fn () => $this->files($id),
                 'links' => fn () => $this->links($id),
