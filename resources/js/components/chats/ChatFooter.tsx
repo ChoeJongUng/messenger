@@ -36,7 +36,7 @@ export default function ChatFooter({
     reloadFiles,
     reloadLinks,
   } = useChatMessageContext();
-
+  console.log(messages);
   const [message, setMessage] = useState("");
   const [textareaHeight, setTextareaHeight] = useState(48);
   const [processing, setProcessing] = useState(false);
@@ -189,7 +189,7 @@ export default function ChatFooter({
         htmlFor="file"
         className="mb-1 cursor-pointer rounded-md p-2 text-primary transition-all hover:bg-secondary focus:bg-secondary"
       >
-        <BsPlusLg className="h-6 w-6" />
+        <BsPlusLg className="h-6 w-6 text-[#07c160]" />
         <input
           type="file"
           className="hidden"
@@ -205,7 +205,7 @@ export default function ChatFooter({
           className="absolute right-2 mb-3 text-primary"
           onClick={toggleEmoji}
         >
-          <BsEmojiSmile className="h-6 w-6" />
+          <BsEmojiSmile className="h-6 w-6 text-[#07c160]" />
         </button>
 
         <div
@@ -240,11 +240,13 @@ export default function ChatFooter({
           "mb-1 flex rounded-md p-2 text-primary transition-all disabled:cursor-not-allowed",
           message.trim().length === 0 &&
             "hover:bg-secondary focus:bg-secondary",
-          message.trim().length > 0 && !processing && "bg-primary !text-white",
+          message.trim().length > 0 &&
+            !processing &&
+            "bg-[#07c160] !text-white",
         )}
         disabled={processing}
       >
-        <BiSend className="h-6 w-6" />
+        <BiSend className="h-6 w-6 text-[#07c160]" />
       </button>
     </form>
   );

@@ -10,23 +10,29 @@ export const relativeTime = (time: string) => {
       (match, p1, p2) => {
         switch (p2) {
           case "minute":
-            return p1 + "m";
+            return p1 + "분";
           case "hour":
-            return p1 + "h";
+            return p1 + "시간";
           case "day":
-            return p1 + "d";
+            return p1 + "일";
           case "week":
-            return p1 + "w";
+            return p1 + "주";
           case "month":
-            return p1 + "M";
+            return p1 + "달";
           case "year":
-            return p1 + "y";
+            return p1 + "년";
           default:
             return match;
         }
       },
     )
-    .replace(" ago", "");
+    .replace(" ago", "전")
+    .replace("a few seconds", "방금")
+    .replace("a day", "하루")
+    .replace("an hour", "한시간")
+    .replace("a week", "한주")
+    .replace("a month", "한달")
+    .replace("an year", "일년");
 };
 
 export const isImageLinkValid = (name: string | null): boolean => {

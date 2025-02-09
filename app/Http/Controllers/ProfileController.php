@@ -114,6 +114,14 @@ class ProfileController extends Controller
         ]);
 
     }
+    public function get_credit(Request $request){
+        $balance = auth()->user()->balance;
+        
+        return response()->json([
+            'credit'=>$balance,
+        ]);
+
+    }
     public function btransfer(Request $request): Response
     {
         $friends = User::whereNot('id', auth()->id())

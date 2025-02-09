@@ -40,7 +40,7 @@ class GroupController extends Controller
                 'from_id' => auth()->id(),
                 'to_id' => $group->id,
                 'to_type' => ChatGroup::class,
-                'body' => 'created group "'. $group->name .'"'
+                'body' => '안녕하세요, 여러분'
             ]);
 
             $from = auth()->user();

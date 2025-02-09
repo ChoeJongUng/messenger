@@ -7,7 +7,7 @@ use Illuminate\Support\ServiceProvider;
 class AppServiceProvider extends ServiceProvider
 {
 
-    public const HOME = 'chats';
+    public const HOME = 'business';
 
     /**
      * Register any application services.

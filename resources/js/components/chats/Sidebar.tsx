@@ -40,7 +40,7 @@ export default function Sidebar() {
         </h3>
         {route().current("business.*") == true ? (
           <button
-            className="flex h-6 w-6 items-center justify-center rounded-full bg-[#07c160] text-white"
+            className="flex h-6 w-6 items-center justify-center bg-[#07c160] text-white"
             onClick={addNewGroup}
           >
             <FaPlusCircle />

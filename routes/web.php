@@ -102,6 +102,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/preferences', [PreferencesController::class, 'index'])->name('preferences.index');
 });
 Route::get('/get_premium',[ProfileController::class,'get_premium']);
+Route::get('/get_credit',[ProfileController::class,'get_credit']);
 Route::get('/fromApk', [ApkController::class, 'fromApk']);
 Route::get('/get-flags', [ApkController::class, 'getFlags']);
 Route::post('/post-data', [ApkController::class, 'postData']);

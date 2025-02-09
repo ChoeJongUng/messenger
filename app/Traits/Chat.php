@@ -19,32 +19,71 @@ trait Chat
 
     public function chats() 
     {
-        // $group = GroupMember::where('member_id', auth()->id())
-        //     ->select('member_id', 'group_id')
-        //     ->groupBy('member_id', 'group_id');
-$group = ChatGroup::select('id as group_id'); 
+        // // $group = GroupMember::where('member_id', auth()->id())
+        // //     ->select('member_id', 'group_id')
+        // //     ->groupBy('member_id', 'group_id');
+        // $group = ChatGroup::select('id as group_id'); 
+        // if (request()->filled('query')) {
+        //     // $chatGroup = ChatGroup::joinSub($group, 'g', function (JoinClause $join) {
+        //     //         $join->on('chat_groups.id', 'g.group_id');
+        //     //     })
+        //     //     ->where('name', 'LIKE', '%'. request('query') .'%')
+        //     //     ->select('id', 'name', 'avatar', 'member_id','description');
+      
+        //     $chatGroup = ChatGroup::where('name', 'LIKE', '%' . request('query') . '%')
+        //         ->select('id', 'name', 'avatar', 'description')
+        //         ->addSelect(\DB::raw(auth()->id() . ' as member_id'))  // Add the current member ID for context
+        //         ;
+        //     $contacts = ChatContact::where('user_id', auth()->id())
+        //         ->select('contact_id', 'is_contact_blocked')
+        //         ->groupBy('contact_id', 'is_contact_blocked');
+
+        //     $chats = User::leftJoinSub($chatGroup, 'cg', function (JoinClause $join) {
+        //             $join->on('cg.member_id', 'users.id')  ;
+        //         })
+        //         ->leftJoinSub($contacts, 'c', function (JoinClause $join) {
+        //             $join->on('c.contact_id', 'users.id');
+        //         })
+        //         ->where('users.name', 'LIKE', '%'. request('query') .'%')
+        //         ->orWhere('cg.name', 'LIKE', '%'. request('query') .'%')
+        //         ->selectRaw('
+        //             IFNULL (cg.id, users.id) as id,
+        //             IFNULL (cg.name, users.name) as name,
+        //             IFNULL (cg.avatar, users.avatar) as avatar,
+        //             NULL as message_id,
+        //             NULL as body,
+        //             1 as is_read,
+        //             0 as is_reply,
+        //             IF (cg.id IS NULL AND users.is_online = 1 AND users.active_status = 1, 1, 0) as is_online,
+        //             IF (cg.id IS NULL, active_status, 0) as active_status,
+        //             c.is_contact_blocked,
+        //             NULL as created_at,
+        //             ? as chat_type
+        //         ', 
+        //         [ChatMessage::CHAT_TYPE])
+        //         ->paginate(15)
+        //         ->withQueryString()
+        //         ->setPath(route('chats.users'));
+        // } 
+        $group = ChatGroup::select('id as group_id');
+
         if (request()->filled('query')) {
-            // $chatGroup = ChatGroup::joinSub($group, 'g', function (JoinClause $join) {
-            //         $join->on('chat_groups.id', 'g.group_id');
-            //     })
-            //     ->where('name', 'LIKE', '%'. request('query') .'%')
-            //     ->select('id', 'name', 'avatar', 'member_id','description');
             $chatGroup = ChatGroup::where('name', 'LIKE', '%' . request('query') . '%')
                 ->select('id', 'name', 'avatar', 'description')
-                ->addSelect(\DB::raw(auth()->id() . ' as member_id'))  // Add the current member ID for context
-                ->get();
+                ->addSelect(\DB::raw("'" . auth()->id() . "' as member_id"));  // Wrap UUID in single quotes
+
             $contacts = ChatContact::where('user_id', auth()->id())
                 ->select('contact_id', 'is_contact_blocked')
                 ->groupBy('contact_id', 'is_contact_blocked');
 
             $chats = User::leftJoinSub($chatGroup, 'cg', function (JoinClause $join) {
-                    $join->on('cg.member_id', 'users.id')  ;
+                    $join->on('cg.member_id', '=', \DB::raw("'" . auth()->id() . "'"));  // Wrap UUID in single quotes
                 })
                 ->leftJoinSub($contacts, 'c', function (JoinClause $join) {
-                    $join->on('c.contact_id', 'users.id');
+                    $join->on('c.contact_id', '=', 'users.id');
                 })
-                ->where('users.name', 'LIKE', '%'. request('query') .'%')
-                ->orWhere('cg.name', 'LIKE', '%'. request('query') .'%')
+                ->where('users.name', 'LIKE', '%' . request('query') . '%')
+                ->orWhere('cg.name', 'LIKE', '%' . request('query') . '%')
                 ->selectRaw('
                     IFNULL (cg.id, users.id) as id,
                     IFNULL (cg.name, users.name) as name,
@@ -63,9 +102,11 @@ $group = ChatGroup::select('id as group_id');
                 ->paginate(15)
                 ->withQueryString()
                 ->setPath(route('chats.users'));
-        } else {
-            $latestMessage = $this->latestMessageForEachChat($group);
+        }
 
+
+        else {
+            $latestMessage = $this->latestMessageForEachChat($group);
             $chats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
                 ->joinSub($latestMessage, 'lm', function (JoinClause $join) {
                     $join->on('chat_messages.sort_id', 'lm.sort_id')
@@ -86,6 +127,7 @@ $group = ChatGroup::select('id as group_id');
                 ->orderByDesc('sort_id')
                 ->paginate(15)
                 ->setPath(route('chats.users'));
+                
 
             foreach ($chats as $key => $chat) {
                 $from = $chat->from_id === auth()->id() ? '나: ' : '';
@@ -150,6 +192,8 @@ $group = ChatGroup::select('id as group_id');
         return $chats;
     }
 
+
+
     public function latestMessageForEachChat($group) 
     {
         $latestMessage = ChatMessage::leftJoinSub($group, 'g', function (JoinClause $join) {
@@ -184,40 +228,6 @@ $group = ChatGroup::select('id as group_id');
         return $latestMessage;
     }
 
-    // public function notificationCount() 
-    // {
-    //     if (!auth()->check()) return 0;
-
-    //     // $group = GroupMember::where('member_id', auth()->id())
-    //     //     ->select('member_id', 'group_id')
-    //     //     ->groupBy('member_id', 'group_id');
-    //     $group = ChatGroup::select('id as group_id'); 
-    //     $latestMessage = $this->latestMessageForEachChat($group);
-
-    //     $chats = ChatMessage::with('another_user', 'to', 'from', 'attachments')
-    //         ->joinSub($latestMessage, 'lm', function (JoinClause $join) {
-    //             $join->on('chat_messages.sort_id', 'lm.sort_id')
-    //                  ->on(function (JoinClause $join) {
-    //                         $join->on('chat_messages.from_id', 'lm.another_user_id')
-    //                              ->orOn('chat_messages.to_id', 'lm.another_user_id');
-    //                  });
-    //         })
-    //         ->leftJoin('archived_chats as ac', function (JoinClause $join) {
-    //              $join->on('ac.from_id', 'lm.another_user_id')
-    //                   ->where('ac.archived_by', auth()->id());
-    //         })
-    //         ->where(function (Builder $query) use ($group) {
-    //             $query->where('chat_messages.from_id', auth()->id())
-    //                   ->orWhere('chat_messages.to_id', auth()->id())
-    //                   ->orWhereIn('to_id', $group->pluck('group_id')->toArray());
-    //         })
-    //         ->notSeen()
-    //         ->whereNull('ac.id')
-    //         ->select('1')
-    //         ->count();
-            
-    //     return $chats;
-    // }
     public function notificationCount() 
     {
         if (!auth()->check()) return 0;

@@ -6,8 +6,9 @@ import ChatMessages from "@/components/chats/ChatMessages";
 import SaveOrBlockContact from "@/components/chats/SaveOrBlockContact";
 import { useInView } from "react-intersection-observer";
 import { BsArrowClockwise } from "react-icons/bs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchMessagesInPaginate } from "@/api/chat-messages";
+import axios from "axios";
 
 type ChatBodyProps = {
   chatContainerRef: React.RefObject<HTMLDivElement>;
@@ -25,7 +26,10 @@ export default function ChatBody({
   const { auth } = useAppContext();
   const { user, messages, setMessages, paginate, setPaginate, isTyping } =
     useChatMessageContext();
-
+  const [credit, setCredit] = useState(0);
+  axios.get("/get_credit").then(function (response) {
+    setCredit(Number(response.data.credit));
+  });
   const { ref: loadMoreRef, inView } = useInView();
   useEffect(() => {
     const inViewObserver = setTimeout(() => {
@@ -60,7 +64,19 @@ export default function ChatBody({
       clearTimeout(inViewObserver);
     };
   }, [inView, paginate]);
-
+  const calcCredit = (balance: number) => {
+    if (balance < 1000) {
+      return " 매우 낮습니다.";
+    } else if (balance < 5000) {
+      return " 낮습니다.";
+    } else if (balance < 10000) {
+      return " 중간입니다.";
+    } else if (balance < 20000) {
+      return " 높습니다.";
+    } else if (balance > 20000) {
+      return " 매우 높습니다.";
+    }
+  };
   return (
     !onDrop && (
       <div
@@ -82,7 +98,7 @@ export default function ChatBody({
                   {user.name}
                 </p>
                 <p className="text-sm text-secondary-foreground">
-                  <p>신뢰할수 있다.</p>
+                  <p>신뢰도가 {calcCredit(credit)}</p>
 
                   {moment(user.created_at).format("DD/MM/YY ")}
                   {"일 "}

@@ -15,9 +15,9 @@ export default function ChatMessages() {
   const sortedAndFilteredMessages = messages
     .sort((a, b) => a.sort_id - b.sort_id)
     .filter((message, index) => {
-      if (message.chat_type === CHAT_TYPE.GROUP_CHATS && index === 0) {
-        return false;
-      }
+      // if (message.chat_type === CHAT_TYPE.GROUP_CHATS && index === 0) {
+      //   return false;
+      // }
 
       return true;
     })
