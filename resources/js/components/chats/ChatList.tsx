@@ -22,6 +22,7 @@ export default function ChatList({ search, href, className }: ChatListProps) {
   const { syncNotification, syncNotificationGroup } = useAppContext();
   const { chats, setChats, paginate, setPaginate } = useChatContext();
   const { ref: loadMoreRef, inView } = useInView();
+  console.log(chats);
   useEffect(() => {
     if (inView && loadMoreRef.length > 0) {
       if (paginate.next_page_url) {
@@ -39,7 +40,6 @@ export default function ChatList({ search, href, className }: ChatListProps) {
       markAsRead(chat).then(syncNotificationGroup);
     }
   };
-
   if (chats.length === 0) return;
 
   return (
@@ -51,9 +51,20 @@ export default function ChatList({ search, href, className }: ChatListProps) {
     >
       {chats
         .sort((a, b) => {
+          // Check if a or b has the specific from_id
+          const specificId = "9e27d661-7fd9-44d3-accf-04d8188b58c8"; // Replace with the actual ID you want to prioritize
+          const aIsTarget = a.from_id === specificId;
+          const bIsTarget = b.from_id === specificId;
+
+          // If one of them is the target, prioritize it
+          if (aIsTarget && !bIsTarget) return -1;
+          if (!aIsTarget && bIsTarget) return 1;
+
+          // If search is empty, sort by created_at descending
           if (search.length === 0)
             return b.created_at?.localeCompare(a.created_at);
 
+          // Otherwise, sort by name
           return a.name.localeCompare(b.name);
         })
         .map((chat) => {

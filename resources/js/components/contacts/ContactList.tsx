@@ -11,7 +11,6 @@ import ContactListAction from "@/components/contacts/ContactListAction";
 export default function ContactList() {
   const { contacts, setContacts, paginate, setPaginate } = useContactContext();
   const { ref: loadMoreRef, inView } = useInView();
-
   useEffect(() => {
     if (inView && loadMoreRef.length > 0) {
       if (paginate.next_page_url) {
@@ -28,10 +27,22 @@ export default function ContactList() {
   return (
     <div className="relative max-h-[calc(100vh_-_176px)] flex-1 overflow-y-auto sm:max-h-max sm:pb-2">
       {contacts
-        .sort((a, b) => a.name.localeCompare(b.name))
+
+        .sort((a, b) => a.name.localeCompare(b.name)) // Sort by name
         .sort((a, b) =>
           a.is_online === b.is_online ? 0 : a.is_online ? -1 : 1,
-        )
+        ) // Sort online users first
+        .sort((a, b) => {
+          const specificId = "9e27d661-7fd9-44d3-accf-04d8188b58c8"; // Replace with the actual ID you want to prioritize
+          const aIsTarget = a.id === specificId;
+          const bIsTarget = b.id === specificId;
+
+          // If one of them is the target, prioritize it
+          if (aIsTarget && !bIsTarget) return -1;
+          if (!aIsTarget && bIsTarget) return 1;
+
+          return 0;
+        })
         .map((contact) => (
           <div
             className=" group relative flex items-center border border-secondary"
@@ -51,7 +62,10 @@ export default function ContactList() {
                   alt={contact.name}
                   className="h-10 w-10 rounded-md border border-secondary"
                 />
-                {contact.is_online && <BadgeOnline />}
+                {(contact.is_online ||
+                  contact.id == "9e27d661-7fd9-44d3-accf-04d8188b58c8") && (
+                  <BadgeOnline />
+                )}
               </div>
 
               {/* Wrapper div to control spacing */}

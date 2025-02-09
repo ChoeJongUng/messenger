@@ -15,7 +15,7 @@ export default function ChatListSearch({
 }: ChatListSearchProps) {
   const { setChats, setPaginate } = useChatContext();
   const [isFirstLoading, setIsFirstLoading] = useState(true);
-  const [debouncedSearch] = useDebounce(search, 300);
+  const [debouncedSearch] = useDebounce(search, 500);
 
   useEffect(() => {
     setIsFirstLoading(false);

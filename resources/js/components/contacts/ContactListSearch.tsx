@@ -15,7 +15,7 @@ export default function ContactListSearch({
 }: ContactListSearchProps) {
   const { setContacts, setPaginate } = useContactContext();
   const [isFirstLoading, setIsFirstLoading] = useState(true);
-  const [debouncedSearch] = useDebounce(search, 300);
+  const [debouncedSearch] = useDebounce(search, 500);
 
   useEffect(() => {
     setIsFirstLoading(false);
