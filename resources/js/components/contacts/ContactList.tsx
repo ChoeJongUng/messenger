@@ -22,7 +22,7 @@ export default function ContactList() {
     }
   }, [inView, paginate]);
   if (contacts.length === 0) return;
-
+  console.log(contacts);
   return (
     <div className="relative max-h-[calc(100vh_-_176px)] flex-1 overflow-y-auto sm:max-h-max sm:pb-2">
       {contacts

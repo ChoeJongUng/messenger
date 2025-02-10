@@ -40,7 +40,6 @@ export default function ChatList({ search, href, className }: ChatListProps) {
     }
   };
   if (chats.length === 0) return;
-
   return (
     <div
       className={clsx(
@@ -70,7 +69,10 @@ export default function ChatList({ search, href, className }: ChatListProps) {
           if (route().current("business.*") == true) {
             return (
               chat.chat_type == CHAT_TYPE.GROUP_CHATS && (
-                <div className="group relative flex items-center" key={chat.id}>
+                <div
+                  className="group relative flex items-center border border-secondary"
+                  key={chat.id}
+                >
                   <Link
                     href={route(href, chat.id)}
                     as="button"

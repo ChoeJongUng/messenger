@@ -39,8 +39,11 @@ export default function Welcome({
   return (
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 p-6 font-['Inter'] text-foreground sm:gap-12 sm:p-8">
       <div>
-        <Link href="/">
+        <Link href="/" className="flex">
           <ApplicationLogo className="h-10 w-10" />
+          <span className="text-3xl font-bold text-blue-500">
+            &nbsp;TradeLink
+          </span>
         </Link>
       </div>
 
@@ -58,9 +61,16 @@ export default function Welcome({
               {" 창의적이고 혁신적인 공간."}
             </span>
           </h1> */}
-
-          <p className="text-lg sm:text-xl">
-            원하는 비지니스 파트너를 어서 만나보세요.
+          <p className="text-center text-3xl font-bold">일이 쉬워진다</p>
+          <p className="!mt-1 pt-1 text-center text-2xl font-bold">
+            트레드링크
+          </p>
+          <p className="!mt-4 text-center text-lg sm:text-lg">
+            트레드링크는 트레드의 편리함과 기술, 일하는 방식을 담은 비지니스
+            컴뮤니티 플랫폼입니다.
+            <br />
+            서로 협력, 경영지원을 하나의 플랜폼에서 활용하여 생산성을
+            높여보세요.
           </p>
 
           <form onSubmit={submit} className="flex flex-col gap-4 lg:w-3/4">

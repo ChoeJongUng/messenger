@@ -12,9 +12,13 @@ export default function ChargeForm({ className = "" }: { className?: string }) {
           없습니다. 다른 결제 방법을 시도하시거나 문의해 주세요.
         </p>
       </header>
+      <h2>문제해결방법</h2>
+      <p className="!mt-2 text-sm">TradeLink팀에 연락해주십시오.</p>
       <h2>현지 연계인정보</h2>
-      <p className="!mt-2 text-sm">이메일:super998525@outlook.com</p>
-      <p className="!mt-1 text-sm">전화번호:18341530157</p>
+      <p className="!mt-2 text-sm">이메일: super998525@outlook.com</p>
+      <p className="!mt-1 text-sm">카카오계정: super998525@outlook.com</p>
+
+      <p className="!mt-1 text-sm">WeChat계정: rabbit1234005</p>
     </section>
   );
 }
