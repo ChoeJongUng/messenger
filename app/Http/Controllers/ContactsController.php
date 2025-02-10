@@ -19,7 +19,6 @@ class ContactsController extends Controller
     {
         try {
             $contacts = $this->contacts();
-
             return Inertia::render('contacts/Index', [
                 'contacts' => $contacts
             ]);

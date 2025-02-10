@@ -38,8 +38,8 @@ trait Contact
         })
         ->select('users.*', 'cc.is_contact_blocked') // Select all user details, along with the blacklist status
         ->paginate(15)
-        ->withQueryString();
-
+        ->withQueryString()
+        ->setPath(route('contacts.data'));
         return $contacts;
 
 

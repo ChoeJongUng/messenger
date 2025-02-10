@@ -44,7 +44,7 @@ export default function ChatList({ search, href, className }: ChatListProps) {
   return (
     <div
       className={clsx(
-        "relative max-h-[calc(100vh_-_158px)] flex-1 overflow-y-auto px-2 sm:max-h-max sm:pb-2",
+        "relative max-h-[calc(100vh_-_176px)] flex-1 overflow-y-auto px-2 sm:max-h-max sm:pb-2",
         className,
       )}
     >

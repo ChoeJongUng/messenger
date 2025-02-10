@@ -40,13 +40,13 @@ export default function Welcome({
     <div className="mx-auto flex min-h-screen max-w-7xl flex-col gap-8 p-6 font-['Inter'] text-foreground sm:gap-12 sm:p-8">
       <div>
         <Link href="/">
-          <ApplicationLogo className="h-10" />
+          <ApplicationLogo className="h-10 w-10" />
         </Link>
       </div>
 
       <div className="my-auto grid grid-cols-1 sm:grid-cols-2">
         <div className="space-y-8 sm:w-11/12 sm:space-y-12">
-          <h1 className="text-4xl font-bold sm:text-5xl lg:text-7xl">
+          {/* <h1 className="text-4xl font-bold sm:text-5xl lg:text-7xl">
             <span className="bg-gradient-to-r from-blue-300 via-purple-500 to-rose-500 bg-clip-text text-transparent">
               새로운 기회가
             </span>
@@ -57,7 +57,7 @@ export default function Welcome({
             <span className="bg-gradient-to-r from-blue-600 via-purple-500 to-rose-500 bg-clip-text text-transparent">
               {" 창의적이고 혁신적인 공간."}
             </span>
-          </h1>
+          </h1> */}
 
           <p className="text-lg sm:text-xl">
             원하는 비지니스 파트너를 어서 만나보세요.
@@ -74,7 +74,7 @@ export default function Welcome({
                 autoComplete="username"
                 isFocused={true}
                 onChange={(e) => setData("phone", e.target.value)}
-                placeholder="Enter your phone address"
+                placeholder="전화번호"
               />
 
               <InputError message={errors.phone} className="mt-2" />
@@ -89,7 +89,7 @@ export default function Welcome({
                 className="w-full border-secondary bg-secondary dark:border-secondary"
                 autoComplete="current-password"
                 onChange={(e) => setData("password", e.target.value)}
-                placeholder="Enter your password"
+                placeholder="비밀번호"
               />
 
               <InputError message={errors.password} className="mt-2" />
@@ -125,10 +125,6 @@ export default function Welcome({
             </div>
           </form>
         </div>
-
-        <div className="mt-4 flex items-center justify-center sm:mt-0">
-          <img src="/images/vector.png" alt="vector.png" />
-        </div>
       </div>
 
       <div className="mt-auto flex gap-2">
@@ -136,8 +132,7 @@ export default function Welcome({
           &copy; {appName} {moment().format("Y")}.
         </Link>
         <span className="flex items-center gap-1 text-secondary-foreground">
-          <BsHeartFill className="text-sm text-danger" /> Tencent에 의해서
-          개발됨
+          <BsHeartFill className="text-sm text-danger" /> By TradeLink{" "}
         </span>
       </div>
     </div>

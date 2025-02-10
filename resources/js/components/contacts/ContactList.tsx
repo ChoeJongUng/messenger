@@ -21,7 +21,6 @@ export default function ContactList() {
       }
     }
   }, [inView, paginate]);
-
   if (contacts.length === 0) return;
 
   return (

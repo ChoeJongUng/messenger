@@ -10,11 +10,11 @@
     <link rel="icon" href="{{ asset('images/tradelink.png') }}">
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
+    <!-- <link
         href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..700&family=Inter:wght@400..700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet"> -->
 
     <!-- Scripts -->
     @routes
