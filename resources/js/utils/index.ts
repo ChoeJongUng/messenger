@@ -32,6 +32,7 @@ export const relativeTime = (time: string) => {
     .replace("an hour", "한시간")
     .replace("a week", "한주")
     .replace("a month", "한달")
+    .replace("in", "")
     .replace("an year", "일년");
 };
 

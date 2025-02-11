@@ -105,7 +105,7 @@ export default function PremiumForm({
 
             <p className="mt-1 text-sm text-secondary-foreground">
               {currentPremium == true
-                ? "정식회원기일을 30일 연장하시겠습니까?"
+                ? "정식회원기일을 365일 연장하시겠습니까?"
                 : "정식회원으로 등록하시겠습니까?"}
             </p>
           </header>

@@ -179,10 +179,10 @@ class ProfileController extends Controller
 
         if($is_premium==false){
             $paid_at = Carbon::now()->format('Y-m-d H:i:s');  // Using Carbon to get the current date and time
-            $finished_at = Carbon::now()->addDays(30)->format('Y-m-d H:i:s');  // Add 30 days to the current date
+            $finished_at = Carbon::now()->addDays(365)->format('Y-m-d H:i:s');  // Add 30 days to the current date
         }else{
             $paid_at = Carbon::now()->format('Y-m-d H:i:s');  // Using Carbon to get the current date and time
-            $finished_at = Carbon::parse($finished_at)->addDays(30)->format('Y-m-d H:i:s');
+            $finished_at = Carbon::parse($finished_at)->addDays(365)->format('Y-m-d H:i:s');
         }
 
 
