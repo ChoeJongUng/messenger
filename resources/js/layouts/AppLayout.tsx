@@ -18,13 +18,13 @@ export default function AppLayout({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (!isMobile) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center bg-black text-lg text-white">
-        이 웹사이트는 모바일 기기에서만 이용할 수 있습니다.
-      </div>
-    );
-  }
+  // if (!isMobile) {
+  //   return (
+  //     <div className="flex h-screen w-screen items-center justify-center bg-black text-lg text-white">
+  //       이 웹사이트는 모바일 기기에서만 이용할 수 있습니다.
+  //     </div>
+  //   );
+  // }
   return (
     <AppProvider>
       <Head
